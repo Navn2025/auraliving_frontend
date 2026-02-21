@@ -2,6 +2,7 @@ import axios from '../../api/axios.config.js';
 import React, {useState, useEffect, useRef} from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
+import Footer from '../../components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -215,6 +216,7 @@ export default function ContactPage()
                     </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

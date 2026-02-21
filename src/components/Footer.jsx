@@ -13,31 +13,34 @@ const Footer=() =>
 
     useEffect(() =>
     {
-        // Re-calculate all scroll positions because height changed
-        ScrollTrigger.refresh();
-
         const ctx=gsap.context(() =>
         {
             /* ── SEMI-CIRCLES wave-in ── */
             gsap.from('.footer-circle', {
-                y: -60, opacity: 0, duration: 1, stagger: 0.05, ease: 'bounce.out',
-                scrollTrigger: {trigger: '.footer-circles', start: 'top bottom', once: true}
+                y: -60, opacity: 0, duration: 1.2, stagger: 0.06, ease: 'bounce.out',
+                scrollTrigger: {trigger: '.footer-circles', start: 'top 105%', once: true}
             });
 
             /* ── FOOTER COLUMNS ── */
             gsap.from('.footer-col', {
-                y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
-                scrollTrigger: {trigger: '.footer-content', start: 'top 95%', once: true}
+                y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
+                scrollTrigger: {trigger: '.footer-content', start: 'top 105%', once: true}
             });
 
             /* ── BOTTOM BAR ── */
             gsap.from('.footer-bottom', {
-                opacity: 0, duration: 1, ease: 'power2.out',
-                scrollTrigger: {trigger: '.footer-bottom', start: 'top bottom', once: true}
+                y: 20, opacity: 0, duration: 1.2, ease: 'power2.out',
+                scrollTrigger: {trigger: '.footer-bottom', start: 'top 105%', once: true}
             });
         }, footerRef);
 
-        return () => ctx.kill();
+        const timer=setTimeout(() => ScrollTrigger.refresh(), 200);
+
+        return () =>
+        {
+            ctx.kill();
+            clearTimeout(timer);
+        };
     }, [pathname]);
 
     return (

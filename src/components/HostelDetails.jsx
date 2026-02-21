@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchHostelById} from '../store/slice/hostel.slice';
+import Footer from './Footer';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
@@ -377,6 +378,7 @@ const HostelPage=() =>
                     </div>
                 </div>
             </section>
+            <Footer />
         </main>
     );
 };

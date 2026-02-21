@@ -7,6 +7,7 @@ import img5 from '../../assets/img5.jpg';
 import img6 from '../../assets/img6.jpg';
 import img7 from '../../assets/img7.jpg';
 import HostelCard from '../../components/HostelCard';
+import Footer from '../../components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,6 +124,7 @@ const Hostel=() =>
                     </div>
                 ))}
             </section>
+            <Footer />
         </main>
     );
 };

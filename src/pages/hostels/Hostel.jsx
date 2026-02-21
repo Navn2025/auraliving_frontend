@@ -47,6 +47,7 @@ const Hostel=() =>
         // Small delay so React finishes rendering the cards into the DOM
         const timer=setTimeout(() =>
         {
+            ScrollTrigger.refresh();
             gsap.from('.hostel-card-anim', {
                 y: 60, opacity: 0, duration: 0.65, stagger: 0.12, ease: 'power3.out',
                 scrollTrigger: {

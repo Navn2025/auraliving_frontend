@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useEffect, useRef} from "react";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -9,9 +9,13 @@ gsap.registerPlugin(ScrollTrigger);
 const Footer=() =>
 {
     const footerRef=useRef(null);
+    const {pathname}=useLocation();
 
     useEffect(() =>
     {
+        // Re-calculate all scroll positions because height changed
+        ScrollTrigger.refresh();
+
         const ctx=gsap.context(() =>
         {
             /* ── SEMI-CIRCLES wave-in ── */
@@ -34,7 +38,7 @@ const Footer=() =>
         }, footerRef);
 
         return () => ctx.kill();
-    }, []);
+    }, [pathname]);
 
     return (
         <footer ref={footerRef} className="bg-[#0d1b2a] text-[#f0ebd8] relative overflow-hidden">

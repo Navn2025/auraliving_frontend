@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchHostelById} from '../store/slice/hostel.slice';
+import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 const HostelPage=() =>
 {
     const {id}=useParams();
@@ -23,6 +27,7 @@ const HostelPage=() =>
         {
             setPrimaryImage(hostel.images[0]);
         }
+        if (hostel) ScrollTrigger.refresh();
     }, [hostel]);
 
     if (status==='loading')

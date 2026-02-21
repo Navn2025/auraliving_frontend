@@ -67,46 +67,41 @@ const Hostel=() =>
             {/* ── Hero Section ── */}
             <section
                 style={{backgroundImage: "url('/main1.png')", backgroundPosition: "center", backgroundSize: "cover"}}
-                className='w-full h-screen min-h-150 hero-bg flex flex-col relative overflow-hidden bg-[#0d1b2a]'
+                className='w-full min-h-screen flex flex-col relative overflow-hidden bg-[#0d1b2a]'
             >
-                {/* Title */}
-                <div className='text-[#f0ebd8] text-center pt-16 sm:pt-20 md:pt-24 lg:pt-28 px-4 sm:px-6 md:px-8'>
-                    <h1 className='hostel-hero-title text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight'>
-                        AuraLiving — Premium Student Residences
-                    </h1>
-                </div>
-
                 {/* Content Container */}
-                <div className='flex-1 flex flex-col lg:flex-row w-full'>
+                <div className='flex-1 flex flex-col lg:flex-row w-full container mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-0'>
                     {/* Left Content */}
-                    <div className='w-full lg:w-3/5 flex justify-center lg:justify-start items-center px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-6 md:py-8 lg:py-0'>
-                        <div className='w-full max-w-2xl lg:max-w-none lg:w-4/5 flex gap-5 sm:gap-6 md:gap-8 lg:gap-10 flex-col items-center lg:items-start text-center lg:text-left'>
-                            <h2 className='hostel-hero-desc text-[#f0ebd8] text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-medium leading-snug sm:leading-tight'>
-                                Your Perfect Study Sanctuary Awaits
-                            </h2>
-                            <p className='hostel-hero-desc text-[#f0ebd8] text-xs sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-md sm:max-w-lg md:max-w-xl'>
-                                Discover design-forward residences built exclusively for ambitious students. High-speed Wi-Fi, chef-curated meals, and a community wired for success.
+                    <div className='w-full lg:w-3/5 flex justify-center lg:justify-start items-center text-center lg:text-left mt-8 lg:mt-0'>
+                        <div className='w-full max-w-2xl flex gap-6 sm:gap-8 flex-col items-center lg:items-start'>
+                            <h1 className='hostel-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl text-[#f0ebd8] leading-tight'>
+                                <span className="font-bold block">Premium</span>
+                                <span className="block">Student</span>
+                                <span className="font-bold bg-[#f0ebd8] text-[#0d1b2a] inline-block px-3 py-1 mt-2">Residences</span>
+                            </h1>
+                            <p className='hostel-hero-desc text-[#f0ebd8] text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed max-w-lg opacity-90'>
+                                Discover design-forward residences built for your success. High-speed Wi-Fi, chef-curated meals, and a community wired for excellence.
                             </p>
-                            <button onClick={() => document.querySelector('.hostel-grid')?.scrollIntoView({behavior: 'smooth'})} className='hostel-hero-btn bg-[#f0ebd8] text-[#0d1b2a] px-5 xs:px-6 sm:px-8 md:px-10 py-2.5 xs:py-3 sm:py-3.5 md:py-4 rounded-md font-semibold hover:bg-[#e0d8b8] transition-all duration-300 text-xs xs:text-sm sm:text-base md:text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0'>
-                                Find Your Hostels
+                            <button onClick={() => document.querySelector('.hostel-grid')?.scrollIntoView({behavior: 'smooth'})} className='hostel-hero-btn bg-[#f0ebd8] text-[#0d1b2a] px-10 py-4 rounded-full font-bold hover:scale-105 transition-all duration-300 text-base sm:text-lg shadow-2xl'>
+                                Browse Hostels
                             </button>
                         </div>
                     </div>
 
                     {/* Right Decorative Arcs */}
-                    <div className='w-full lg:w-2/5 flex relative items-end justify-center pb-6 sm:pb-8 md:pb-10 lg:pb-0 px-4'>
-                        <div className='relative flex items-end justify-center scale-75 xs:scale-85 sm:scale-90 md:scale-95 lg:scale-100'>
-                            <div className='hostel-arc-1 bg-[#f0ebd8] rounded-t-full z-30 p-2 h-90 w-64 sm:h-64 sm:w-48 md:h-72 md:w-52 lg:h-80 lg:w-60 shadow-2xl flex-shrink-0'>
+                    <div className='w-full lg:w-2/5 flex relative items-end justify-center pb-12 lg:pb-0'>
+                        <div className='relative flex items-end justify-center scale-100 sm:scale-110 lg:scale-125 xl:scale-135'>
+                            <div className='hostel-arc-1 bg-[#f0ebd8] rounded-t-full z-30 p-2 h-64 w-48 sm:h-72 sm:w-52 md:h-80 md:w-60 shadow-2xl flex-shrink-0'>
                                 <div className='overflow-hidden border-2 h-full w-full rounded-t-full border-[#0d1b2a]'>
                                     <img src={img5} alt="" className='h-full w-full object-cover' />
                                 </div>
                             </div>
-                            <div className='hostel-arc-2 bg-[#f0ebd8] rounded-t-full z-20 -ml-14 sm:-ml-16 md:-ml-18 lg:-ml-20 -mb-10 sm:-mb-14 md:-mb-16 lg:-mb-20 p-2 h-75 w-55 sm:h-64 sm:w-48 md:h-72 md:w-52 lg:h-80 lg:w-60 shadow-xl flex-shrink-0'>
+                            <div className='hostel-arc-2 bg-[#f0ebd8] rounded-t-full z-20 -ml-16 -mb-12 p-2 h-64 w-48 sm:h-72 sm:w-52 md:h-80 md:w-60 shadow-xl flex-shrink-0'>
                                 <div className='overflow-hidden border-2 h-full w-full rounded-t-full border-[#0d1b2a]'>
                                     <img src={img6} alt="" className='h-full w-full object-cover object-center' />
                                 </div>
                             </div>
-                            <div className='hostel-arc-3 hidden sm:block bg-[#f0ebd8] rounded-t-full absolute z-0 p-2 h-80 w-64 md:h-96 md:w-80 lg:h-[30rem] lg:w-96 -left-6 sm:-left-8 md:-left-10 lg:left-0 opacity-40 sm:opacity-50 shadow-lg'>
+                            <div className='hostel-arc-3 hidden md:block bg-[#f0ebd8] rounded-t-full absolute z-0 p-2 h-[26rem] w-80 lg:h-[30rem] lg:w-96 left-0 opacity-30 shadow-lg'>
                                 <div className='overflow-hidden border-2 h-full w-full rounded-t-full border-[#0d1b2a]'>
                                     <img src={img7} alt="" className='h-full w-full object-cover object-center' />
                                 </div>
@@ -117,7 +112,7 @@ const Hostel=() =>
             </section>
 
             {/* ── Hostels Grid ── */}
-            <section className='hostel-grid w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 lg:gap-8'>
+            <section className='hostel-grid w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-6 lg:gap-8'>
                 {status==='succeeded'&&hostels.map((hostel) => (
                     <div key={hostel._id} className='hostel-card-anim'>
                         <HostelCard {...hostel} />

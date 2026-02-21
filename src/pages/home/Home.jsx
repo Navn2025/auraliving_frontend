@@ -104,24 +104,24 @@ export default function Home()
             {/* ═══════════════ HERO ═══════════════ */}
             <section
                 style={{backgroundImage: "url('/main1.png')", backgroundPosition: "center", backgroundSize: "cover"}}
-                className="min-h-screen pt-16 w-full relative bg-[#0d1b2a]"
+                className="min-h-screen w-full relative bg-[#0d1b2a] flex items-center"
             >
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-12 py-20 lg:py-0">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-12 py-24 lg:py-0">
 
                     {/* Text */}
-                    <div className="w-full lg:w-1/2 flex flex-col gap-5 text-center lg:text-left">
+                    <div className="w-full lg:w-1/2 flex flex-col gap-6 text-center lg:text-left mt-8 lg:mt-0">
                         <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl text-[#f0ebd8] leading-tight">
                             <span className="font-bold block">Live Better.</span>
                             <span className="block">Study</span>
                             <span className="font-bold bg-[#f0ebd8] text-[#0d1b2a] inline-block px-3 py-1 mt-2">Harder.</span>
                         </h1>
-                        <p className="hero-subtitle text-[#f0ebd8] text-base sm:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        <p className="hero-subtitle text-[#f0ebd8] text-base sm:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 leading-relaxed opacity-90">
                             AuraLiving — premium student housing where design meets discipline and every detail is built for your success.
                         </p>
-                        <div className="hero-btn flex justify-center lg:justify-start">
+                        <div className="hero-btn flex justify-center lg:justify-start pt-2">
                             <button
                                 onClick={() => navigate('/hostel')}
-                                className="bg-[#f0ebd8] text-[#0d1b2a] px-8 sm:px-10 text-base sm:text-lg py-3 sm:py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 font-semibold shadow-lg"
+                                className="bg-[#f0ebd8] text-[#0d1b2a] px-10 text-base sm:text-lg py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 font-semibold shadow-xl"
                             >
                                 Explore Hostels
                             </button>
@@ -129,14 +129,14 @@ export default function Home()
                     </div>
 
                     {/* Hero Image */}
-                    <div className="w-full lg:w-1/2 flex justify-center items-center">
-                        <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[26rem] lg:h-[26rem]">
+                    <div className="w-full lg:w-1/2 flex justify-center items-center pb-10 lg:pb-0">
+                        <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[26rem] lg:h-[26rem]">
                             {/* Main arch image */}
-                            <div className="hero-img-main absolute inset-0 border-4 border-[#f0ebd8] rounded-t-full overflow-hidden bg-[#f0ebd8]">
+                            <div className="hero-img-main absolute inset-0 border-4 border-[#f0ebd8] rounded-t-full overflow-hidden bg-[#f0ebd8] shadow-2xl">
                                 <img src="/room1.jpg" alt="Hostel" className="w-full h-full object-cover" />
                             </div>
                             {/* Small circle */}
-                            <div className="hero-img-sub absolute -bottom-4 -left-4 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#f0ebd8] bg-[#f0ebd8]">
+                            <div className="hero-img-sub absolute -bottom-4 -left-4 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#f0ebd8] bg-[#f0ebd8] shadow-xl">
                                 <img src="/room2.jpg" alt="" className="w-full h-full object-cover" />
                             </div>
                         </div>
@@ -151,7 +151,7 @@ export default function Home()
                         <img src="/room3.jpg" alt="" className="h-full w-full object-cover" />
                     </div>
                     <div className="about-text w-full lg:w-3/5 flex justify-center items-center p-6 sm:p-10 lg:p-16">
-                        <div className="max-w-xl text-[#f0ebd8] space-y-4 sm:space-y-6">
+                        <div className="max-w-xl text-[#f0ebd8] space-y-4 sm:space-y-6 text-center lg:text-left">
                             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-snug">
                                 A Space Designed for Those Who Dare to Dream
                             </h2>
@@ -216,13 +216,13 @@ export default function Home()
                         </div>
 
                         {/* Arch images */}
-                        <div className="w-full lg:w-1/2 flex items-end justify-center gap-3 sm:gap-5" style={{height: '20rem'}}>
+                        <div className="w-full lg:w-1/2 flex items-end justify-center gap-2 sm:gap-5" style={{height: '18rem'}}>
                             {[
                                 {src: img1, h: 'h-[70%]'},
                                 {src: img2, h: 'h-[90%]'},
                                 {src: img3, h: 'h-[70%]'},
                             ].map(({src, h}, i) => (
-                                <div key={i} className={`destination-img flex-1 max-w-[7rem] sm:max-w-[9rem] lg:max-w-[10rem] ${h} bg-[#f0ebd8] rounded-t-full overflow-hidden`}>
+                                <div key={i} className={`destination-img flex-1 max-w-[6rem] sm:max-w-[9rem] lg:max-w-[10rem] ${h} bg-[#f0ebd8] rounded-t-full overflow-hidden`}>
                                     <img src={src} alt="" className="h-full w-full object-cover object-center" />
                                 </div>
                             ))}
@@ -336,14 +336,14 @@ export default function Home()
 
             {/* ═══════════════ CTA ═══════════════ */}
             <section className="cta-section w-full bg-[#f0ebd8] py-16 sm:py-20 lg:py-28">
-                <div className="cta-content container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#0d1b2a] max-w-4xl mx-auto leading-tight">
+                <div className="cta-content container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6">
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#0d1b2a] max-w-4xl mx-auto leading-tight">
                         Your Best Chapter Starts Here.
                     </h2>
-                    <p className="text-sm sm:text-base lg:text-lg text-[#0d1b2a] max-w-xl mx-auto leading-relaxed">
+                    <p className="text-xs sm:text-base lg:text-lg text-[#0d1b2a] max-w-xl mx-auto leading-relaxed">
                         Join thousands of students across India who chose AuraLiving as the launchpad for their biggest ambitions.
                     </p>
-                    <button onClick={() => navigate('/hostel')} className="px-8 sm:px-12 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base lg:text-lg font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
+                    <button onClick={() => navigate('/hostel')} className="px-6 sm:px-12 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base lg:text-lg font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
                         Find Your Hostel
                     </button>
                 </div>

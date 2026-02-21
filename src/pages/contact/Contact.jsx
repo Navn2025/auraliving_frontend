@@ -109,16 +109,16 @@ export default function ContactPage()
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                     {/* heading */}
-                    <div className="text-center mb-12 sm:mb-16 space-y-4">
-                        <span className="c-badge inline-block px-5 py-2 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-sm font-semibold">
+                    <div className="text-center mb-10 sm:mb-16 space-y-4">
+                        <span className="c-badge inline-block px-4 py-1.5 sm:px-5 sm:py-2 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-[10px] sm:text-sm font-bold uppercase tracking-widest">
                             Get In Touch
                         </span>
-                        <h1 className="c-title text-3xl sm:text-5xl md:text-6xl font-bold text-[#f0ebd8] leading-tight">
+                        <h1 className="c-title text-3xl sm:text-5xl md:text-6xl font-black text-[#f0ebd8] leading-tight">
                             Let's Start a{' '}
                             <span className="bg-[#f0ebd8] text-[#0d1b2a] px-2 inline-block">Conversation</span>
                         </h1>
-                        <p className="c-sub text-base sm:text-lg text-[#f0ebd8] opacity-75 max-w-xl mx-auto">
-                            We're here to help you find your perfect home away from home.
+                        <p className="c-sub text-sm sm:text-lg text-[#f0ebd8] opacity-75 max-w-xl mx-auto leading-relaxed">
+                            We're here to help you find your perfect home away from home. Reach out to our team today.
                         </p>
                     </div>
 

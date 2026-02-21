@@ -101,7 +101,7 @@ const Nav=() =>
             >
                 {/* Hamburger */}
                 <div
-                    className="text-2xl sm:text-3xl lg:hidden cursor-pointer text-[#0d1b2a] hover:text-[#0d1b2a]/80 transition-colors"
+                    className="flex-shrink-0 lg:hidden cursor-pointer text-[#0d1b2a] hover:text-[#0d1b2a]/80 transition-colors"
                     onClick={() => setMenuOpen(true)}
                 >
                     <svg className="w-6 h-6 sm:w-7 sm:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -165,10 +165,10 @@ const Nav=() =>
                     </>
                 )}
 
-                <div className="absolute left-1/2 -translate-x-1/2 flex items-center">
-                    <NavLink to="/" className="logo-text flex items-center gap-2 font-bold text-[#0d1b2a] tracking-tight hover:opacity-80 transition-opacity">
-                        <img src={logo} alt="AuraLiving Logo" className="logo w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-lg" />
-                        <span className="text-xl sm:text-2xl lg:text-3xl">Aura<span className="opacity-50">Living</span></span>
+                <div className="absolute left-1/2 -translate-x-1/2 flex items-center pr-2">
+                    <NavLink to="/" className="logo-text flex items-center gap-1 sm:gap-2 font-bold text-[#0d1b2a] tracking-tight hover:opacity-80 transition-opacity">
+                        <img src={logo} alt="AuraLiving Logo" className="logo w-7 h-7 sm:w-10 sm:h-10 object-contain rounded-lg" />
+                        <span className="text-lg sm:text-2xl lg:text-3xl whitespace-nowrap">Aura<span className="opacity-50">Living</span></span>
                     </NavLink>
                 </div>
 

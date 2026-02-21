@@ -79,7 +79,7 @@ const HostelPage=() =>
                             {hostel.comming_soon&&<span className="animate-pulse">🔥 Coming Soon</span>}
                             {hostel.popular&&!hostel.comming_soon&&<span>⭐ Popular Choice</span>}
                         </div>
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#f0ebd8]">
+                        <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#f0ebd8] leading-tight">
                             {hostel.name}
                         </h1>
                         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[#f0ebd8]">
@@ -153,45 +153,45 @@ const HostelPage=() =>
             {/* Quick Info Cards */}
             <section className="w-full bg-[#f0ebd8] py-8 sm:py-12">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                        <div className="bg-[#0d1b2a] p-4 sm:p-6 rounded-xl text-center space-y-2">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto">
+                    <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+                        <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
                                 <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
                                     <path d="M21 16V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V16H21ZM3 13H21V15H3V13ZM3 8H21V11H3V8ZM21 3C21.5523 3 22 3.44772 22 4V6H2V4C2 3.44772 2.44772 3 3 3H21Z"></path>
                                 </svg>
                             </div>
-                            <p className="text-xl sm:text-2xl font-bold text-[#f0ebd8]">{hostel.totalRemainingBeds}</p>
-                            <p className="text-xs sm:text-sm text-[#f0ebd8]/80">Beds Available</p>
+                            <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.totalRemainingBeds}</p>
+                            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Beds Left</p>
                         </div>
 
-                        <div className="bg-[#0d1b2a] p-4 sm:p-6 rounded-xl text-center space-y-2">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto">
+                        <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
                                 <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
                                     <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM9.71002 19.6674C8.74743 17.6259 8.15732 15.3742 8.02731 13H4.06189C4.458 16.1765 6.71639 18.7747 9.71002 19.6674ZM10.0307 13C10.1811 15.4388 10.8778 17.7297 12 19.752C13.1222 17.7297 13.8189 15.4388 13.9693 13H10.0307ZM19.9381 13H15.9727C15.8427 15.3742 15.2526 17.6259 14.29 19.6674C17.2836 18.7747 19.542 16.1765 19.9381 13ZM9.71002 4.33265C6.71639 5.22535 4.458 7.8235 4.06189 11H8.02731C8.15732 8.62577 8.74743 6.37407 9.71002 4.33265ZM14.29 4.33265C15.2526 6.37407 15.8427 8.62577 15.9727 11H19.9381C19.542 7.8235 17.2836 5.22535 14.29 4.33265ZM10.0307 11H13.9693C13.8189 8.56118 13.1222 6.27025 12 4.24799C10.8778 6.27025 10.1811 8.56118 10.0307 11Z"></path>
                                 </svg>
                             </div>
-                            <p className="text-xl sm:text-2xl font-bold text-[#f0ebd8]">{hostel.gender}</p>
-                            <p className="text-xs sm:text-sm text-[#f0ebd8]/80">Gender Type</p>
+                            <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.gender}</p>
+                            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Gender</p>
                         </div>
 
-                        <div className="bg-[#0d1b2a] p-4 sm:p-6 rounded-xl text-center space-y-2">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto">
+                        <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
                                 <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
                                     <path d="M13 21V23H11V21H3C2.44772 21 2 20.5523 2 20V6H22V20C22 20.5523 21.5523 21 21 21H13ZM4 19H20V8H4V19ZM13 10H18V12H13V10ZM13 14H18V16H13V14ZM9 10V13H12V10H9ZM7 8V13C7 13.5523 7.44772 14 8 14H11V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V9C13 8.44772 12.5523 8 12 8H7ZM2 3H22V5H2V3Z"></path>
                                 </svg>
                             </div>
-                            <p className="text-xl sm:text-2xl font-bold text-[#f0ebd8]">{hostel.established}</p>
-                            <p className="text-xs sm:text-sm text-[#f0ebd8]/80">Established</p>
+                            <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.established}</p>
+                            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Built</p>
                         </div>
 
-                        <div className="bg-[#0d1b2a] p-4 sm:p-6 rounded-xl text-center space-y-2">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto">
+                        <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
                                 <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
                                     <path d="M17 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9V3H15V1H17V3ZM4 9V19H20V9H4ZM6 11H8V13H6V11ZM6 15H8V17H6V15ZM10 11H18V13H10V11ZM10 15H15V17H10V15Z"></path>
                                 </svg>
                             </div>
-                            <p className="text-xl sm:text-2xl font-bold text-[#f0ebd8]">₹{hostel.price}</p>
-                            <p className="text-xs sm:text-sm text-[#f0ebd8]/80">Per Month</p>
+                            <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">₹{hostel.price?.toLocaleString('en-IN')}</p>
+                            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Per Month</p>
                         </div>
                     </div>
                 </div>

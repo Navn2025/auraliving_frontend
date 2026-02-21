@@ -103,7 +103,7 @@ export default function Home()
             {/* ═══════════════ HERO ═══════════════ */}
             <section
                 style={{backgroundImage: "url('/main1.png')", backgroundPosition: "center", backgroundSize: "cover"}}
-                className="min-h-screen pt-16 w-full relative"
+                className="min-h-screen pt-16 w-full relative bg-[#0d1b2a]"
             >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-12 py-20 lg:py-0">
 

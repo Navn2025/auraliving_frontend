@@ -65,7 +65,7 @@ const Hostel=() =>
             {/* ── Hero Section ── */}
             <section
                 style={{backgroundImage: "url('/main1.png')", backgroundPosition: "center", backgroundSize: "cover"}}
-                className='w-full h-screen min-h-150 hero-bg flex flex-col relative overflow-hidden'
+                className='w-full h-screen min-h-150 hero-bg flex flex-col relative overflow-hidden bg-[#0d1b2a]'
             >
                 {/* Title */}
                 <div className='text-[#f0ebd8] text-center pt-16 sm:pt-20 md:pt-24 lg:pt-28 px-4 sm:px-6 md:px-8'>

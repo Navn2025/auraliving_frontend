@@ -7,12 +7,13 @@ const ScrollToTop=() =>
 
     useEffect(() =>
     {
-        // Disable browser's automatic scroll restoration on reload
-        if ('scrollRestoration' in window.history)
+        // Ensuring scroll to top happens after potential layouts or late renders
+        const timer=setTimeout(() =>
         {
-            window.history.scrollRestoration='manual';
-        }
-        window.scrollTo(0, 0);
+            window.scrollTo(0, 0);
+        }, 10);
+
+        return () => clearTimeout(timer);
     }, [pathname]);
 
     return null;

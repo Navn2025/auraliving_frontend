@@ -7,13 +7,32 @@ const ScrollToTop=() =>
 
     useEffect(() =>
     {
-        // Ensuring scroll to top happens after potential layouts or late renders
+        // 1. Disable browser's automatic scroll restoration immediately
+        if ('scrollRestoration' in window.history)
+        {
+            window.history.scrollRestoration='manual';
+        }
+
+        // 2. Immediate scroll to top
+        window.scrollTo(0, 0);
+
+        // 3. Ensure it happens after initial render/layout
         const timer=setTimeout(() =>
         {
             window.scrollTo(0, 0);
-        }, 10);
+        }, 0);
 
-        return () => clearTimeout(timer);
+        // 4. "Safety" scroll after a longer delay (handles late-loading content or other scripts)
+        const safetyTimer=setTimeout(() =>
+        {
+            window.scrollTo(0, 0);
+        }, 100);
+
+        return () =>
+        {
+            clearTimeout(timer);
+            clearTimeout(safetyTimer);
+        };
     }, [pathname]);
 
     return null;

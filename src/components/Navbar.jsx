@@ -96,7 +96,7 @@ const Nav=() =>
     return (
         <nav>
             <div
-                className={`fixed top-0 w-full z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 transition-transform duration-500 flex items-center justify-between bg-[#f0ebd8] border-b-2 border-[#0d1b2a] ${show? "translate-y-0":"-translate-y-full"
+                className={`fixed top-0 w-full z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 transition-transform duration-500 flex items-center justify-between bg-[#f0ebd8] border-b-2 border-[#0d1b2a] ${show? "translate-y-0":"-translate-y-full"
                     }`}
             >
                 {/* Hamburger */}

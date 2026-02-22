@@ -6,6 +6,7 @@ import img1 from '../../assets/img1.jpg';
 import img2 from '../../assets/img2.jpg';
 import img3 from '../../assets/img3.jpg';
 import img4 from '../../assets/img4.jpg';
+import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer';
 import useMetadata from '../../hooks/useMetadata';
 
@@ -40,7 +41,8 @@ export default function Home()
             /* ── HERO ── */
             const heroTl=gsap.timeline({delay: 0.2});
             heroTl
-                .from('.hero-title', {y: 60, opacity: 0, duration: 1, ease: 'power3.out'})
+                .from('.hero-logo', {y: 30, opacity: 0, duration: 0.8, ease: 'power3.out'})
+                .from('.hero-title', {y: 60, opacity: 0, duration: 1, ease: 'power3.out'}, '-=0.4')
                 .from('.hero-subtitle', {y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'}, '-=0.5')
                 .from('.hero-btn', {y: 30, opacity: 0, duration: 0.7, ease: 'power3.out'}, '-=0.4')
                 .from('.hero-img-main', {scale: 0.7, opacity: 0, duration: 1, ease: 'back.out(1.4)'}, '-=0.8')
@@ -115,6 +117,9 @@ export default function Home()
 
                     {/* Text */}
                     <div className="w-full lg:w-1/2 flex flex-col gap-6 text-center lg:text-left mt-8 lg:mt-0">
+                        <div className="hero-logo flex justify-center lg:justify-start">
+                            <img src={logo} alt="AuraLivings Logo" className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain rounded-xl shadow-lg" />
+                        </div>
                         <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-[#f0ebd8] leading-tight">
                             <span className="font-bold block">Live Like</span>
                             <span className="font-bold bg-[#f0ebd8] text-[#0d1b2a] inline-block px-3 py-1 mt-2">Home.</span>

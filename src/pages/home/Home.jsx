@@ -117,7 +117,7 @@ export default function Home()
 
                     {/* Text */}
                     <div className="w-full lg:w-1/2 flex flex-col gap-6 text-center lg:text-left mt-8 lg:mt-0">
-                        <div className="hero-logo flex justify-center lg:justify-start">
+                        <div className="hero-logo flex md:hidden justify-center lg:justify-start">
                             <img src={logo} alt="AuraLivings Logo" className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain rounded-xl shadow-lg" />
                         </div>
                         <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-[#f0ebd8] leading-tight">

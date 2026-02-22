@@ -167,8 +167,8 @@ const Nav=() =>
 
                 <div className="absolute left-1/2 -translate-x-1/2 flex items-center pr-2">
                     <NavLink to="/" className="logo-text flex items-center gap-1 sm:gap-2 font-bold text-[#0d1b2a] tracking-tight hover:opacity-80 transition-opacity">
-                        <img src={logo} alt="AuraLivings Logo" className="logo w-10 h-10 sm:w-14 sm:h-14 object-contain rounded-lg" />
-                        <span className="text-xl sm:text-2xl lg:text-3xl whitespace-nowrap">Aura<span className="opacity-50">Livings</span></span>
+                        <img src={logo} alt="AuraLivings Logo" className="logo w-8 h-8 sm:w-11 sm:h-11 object-contain rounded-lg" />
+                        <span className="text-lg sm:text-xl lg:text-2xl whitespace-nowrap">Aura<span className="opacity-50">Livings</span></span>
                     </NavLink>
                 </div>
 

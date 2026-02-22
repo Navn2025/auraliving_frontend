@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchHostelById} from '../store/slice/hostel.slice';
+import useMetadata from '../hooks/useMetadata';
 import Footer from './Footer';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
@@ -15,6 +16,13 @@ const HostelPage=() =>
     const hostel=useSelector((state) => state.hostels.selectedHostel);
     const status=useSelector((state) => state.hostels.status);
     const error=useSelector((state) => state.hostels.error);
+
+    // Update metadata dynamically based on hostel info
+    useMetadata(
+        hostel? `${hostel.name} in ${hostel.location}`:'Hostel Details',
+        hostel? `Book your stay at ${hostel.name} in ${hostel.location}. ${hostel.description?.substring(0, 150)}...`:'View premium student hostel details.'
+    );
+
     const [primaryImage, setPrimaryImage]=useState(hostel?.images?.length>0? hostel.images[0]:null);
 
     useEffect(() =>

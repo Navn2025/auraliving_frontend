@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import Footer from '../../components/Footer';
+import useMetadata from '../../hooks/useMetadata';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,6 +46,10 @@ const whyCards=[
 
 export default function ContactPage()
 {
+    useMetadata(
+        'Contact Us',
+        'Have questions about AuraLiving? Get in touch with our team for admissions guidance, support, or to schedule a visit to our premium student hostels.'
+    );
     const [formData, setFormData]=useState({name: '', email: '', phone: '', subject: '', message: ''});
     const [isSubmitting, setIsSubmitting]=useState(false);
     const [submissionSuccess, setSubmissionSuccess]=useState(false);

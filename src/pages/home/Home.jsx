@@ -7,11 +7,16 @@ import img2 from '../../assets/img2.jpg';
 import img3 from '../../assets/img3.jpg';
 import img4 from '../../assets/img4.jpg';
 import Footer from '../../components/Footer';
+import useMetadata from '../../hooks/useMetadata';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home()
 {
+    useMetadata(
+        'Home',
+        'AuraLiving offers premium, design-forward student hostels built for ambition. Modern amenities, vibrant communities, and spaces that inspire.'
+    );
     const faqData=[
         {id: 1, question: "What makes AuraLiving different from other student hostels?", answer: "AuraLiving is designed from the ground up for ambitious students — premium interiors, curated study environments, high-speed internet, and a community of motivated peers all in one place."},
         {id: 2, question: "What accommodation options are available?", answer: "We offer fully furnished single, double, and shared rooms — each with ergonomic furniture, ample storage, and daily housekeeping."},

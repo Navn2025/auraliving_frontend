@@ -8,11 +8,16 @@ import img6 from '../../assets/img6.jpg';
 import img7 from '../../assets/img7.jpg';
 import HostelCard from '../../components/HostelCard';
 import Footer from '../../components/Footer';
+import useMetadata from '../../hooks/useMetadata';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Hostel=() =>
 {
+    useMetadata(
+        'Hostels',
+        'Explore our collection of premium student hostels. From high-speed Wi-Fi to chef-curated meals, find the perfect residence for your academic journey.'
+    );
     const dispatch=useDispatch();
     const hostels=useSelector((state) => state.hostels.hostels);
     const status=useSelector((state) => state.hostels.status);

@@ -336,10 +336,10 @@ export default function AdminDashboard()
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-[#f0ebd8]/10">
         <a href="/" className="flex items-center gap-3 mb-1">
-          <img src={logo} alt="AuraLiving Logo" className="w-8 h-8 object-contain rounded-md" />
+          <img src={logo} alt="AuraLivings Logo" className="w-8 h-8 object-contain rounded-md" />
           <div>
             <span className="text-2xl font-bold text-[#f0ebd8]">Aura</span>
-            <span className="text-2xl font-bold text-[#f0ebd8]/40">Living</span>
+            <span className="text-2xl font-bold text-[#f0ebd8]/40">Livings</span>
           </div>
         </a>
         <p className="text-[#f0ebd8]/40 text-xs mt-1">Admin Dashboard</p>
@@ -562,7 +562,7 @@ export default function AdminDashboard()
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Hostel Name *">
                   <input type="text" name="name" value={formData.name} onChange={handleInputChange}
-                    className={inputCls} required placeholder="e.g. AuraLiving Indore" />
+                    className={inputCls} required placeholder="e.g. AuraLivings Indore" />
                 </Field>
                 <Field label="Location *">
                   <input type="text" name="location" value={formData.location} onChange={handleInputChange}

@@ -68,8 +68,8 @@ const Footer=() =>
             <div className="footer-content max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div className="footer-col">
                     <div className="flex items-center gap-3 mb-3">
-                        <img src={logo} alt="AuraLiving Logo" className="w-10 h-10 object-contain rounded-lg" />
-                        <h2 className="text-2xl font-bold">AuraLiving</h2>
+                        <img src={logo} alt="AuraLivings Logo" className="w-10 h-10 object-contain rounded-lg" />
+                        <h2 className="text-2xl font-bold">AuraLivings</h2>
                     </div>
                     <p className="text-sm opacity-80 leading-relaxed">
                         Premium student living for those who refuse to settle. Design-forward spaces, vibrant community, and every amenity you need to thrive.
@@ -80,7 +80,7 @@ const Footer=() =>
                     <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-sm opacity-90">
                         <li><Link to="/" className="hover:underline hover:opacity-70 transition-opacity">Home</Link></li>
-                        <li><Link to="/hostels" className="hover:underline hover:opacity-70 transition-opacity">Hostels</Link></li>
+                        <li><Link to="/hostel" className="hover:underline hover:opacity-70 transition-opacity">Hostels</Link></li>
                         <li><Link to="/contact" className="hover:underline hover:opacity-70 transition-opacity">Contact</Link></li>
                     </ul>
                 </div>
@@ -90,14 +90,14 @@ const Footer=() =>
                     <ul className="space-y-2 text-sm opacity-90">
                         <li>Jagdalpur, Chhattisgarh, India</li>
                         <li>+91 8989140402</li>
-                        <li>hello@auraliving.in</li>
+                        <li>hello@aura-livings.com</li>
                     </ul>
                 </div>
             </div>
 
             {/* BOTTOM BAR */}
             <div className="footer-bottom border-t border-[#f0ebd8]/30 text-center py-4 text-sm opacity-70">
-                © {new Date().getFullYear()} AuraLiving. All rights reserved.
+                © {new Date().getFullYear()} AuraLivings. All rights reserved.
             </div>
         </footer>
     );

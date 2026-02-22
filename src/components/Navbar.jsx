@@ -96,7 +96,7 @@ const Nav=() =>
     return (
         <nav>
             <div
-                className={`fixed top-0 w-full z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 transition-transform duration-500 flex items-center justify-between bg-[#f0ebd8] border-b-2 border-[#0d1b2a] ${show? "translate-y-0":"-translate-y-full"
+                className={`fixed top-0 w-full z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 transition-transform duration-500 flex items-center justify-between bg-[#f0ebd8] border-b-2 border-[#0d1b2a] ${show? "translate-y-0":"-translate-y-full"
                     }`}
             >
                 {/* Hamburger */}
@@ -104,7 +104,7 @@ const Nav=() =>
                     className="flex-shrink-0 lg:hidden cursor-pointer text-[#0d1b2a] hover:text-[#0d1b2a]/80 transition-colors"
                     onClick={() => setMenuOpen(true)}
                 >
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <svg className="w-7 h-7 sm:w-8 sm:h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
                     </svg>
                 </div>
@@ -157,7 +157,7 @@ const Nav=() =>
                                 onClick={closeMenu}
                                 className="absolute text-2xl sm:text-3xl top-4 sm:top-6 right-4 sm:right-6 cursor-pointer text-[#0d1b2a] hover:text-[#0d1b2a]/70 transition-colors"
                             >
-                                <svg className="w-6 h-6 sm:w-7 sm:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <svg className="w-7 h-7 sm:w-8 sm:h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>
                                 </svg>
                             </div>
@@ -167,8 +167,8 @@ const Nav=() =>
 
                 <div className="absolute left-1/2 -translate-x-1/2 flex items-center pr-2">
                     <NavLink to="/" className="logo-text flex items-center gap-1 sm:gap-2 font-bold text-[#0d1b2a] tracking-tight hover:opacity-80 transition-opacity">
-                        <img src={logo} alt="AuraLiving Logo" className="logo w-7 h-7 sm:w-10 sm:h-10 object-contain rounded-lg" />
-                        <span className="text-lg sm:text-2xl lg:text-3xl whitespace-nowrap">Aura<span className="opacity-50">Living</span></span>
+                        <img src={logo} alt="AuraLivings Logo" className="logo w-10 h-10 sm:w-14 sm:h-14 object-contain rounded-lg" />
+                        <span className="text-xl sm:text-2xl lg:text-3xl whitespace-nowrap">Aura<span className="opacity-50">Livings</span></span>
                     </NavLink>
                 </div>
 

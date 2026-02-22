@@ -12,7 +12,7 @@ const useMetadata=(title, description) =>
         // Update Title
         if (title)
         {
-            document.title=`${title} | AuraLiving`;
+            document.title=`${title} | AuraLivings`;
         }
 
         // Update Description

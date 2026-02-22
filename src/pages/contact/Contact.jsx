@@ -12,8 +12,8 @@ const contactInfo=[
         iconPath: <path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z" />,
         title: 'Email Us',
         sub: 'For general inquiries and support',
-        detail: 'hello@auraliving.in',
-        href: 'mailto:hello@auraliving.in',
+        detail: 'hello@aura-livings.com',
+        href: 'mailto:hello@aura-livings.com',
     },
     {
         iconPath: <path d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821Z" />,
@@ -48,7 +48,7 @@ export default function ContactPage()
 {
     useMetadata(
         'Contact Us',
-        'Have questions about AuraLiving? Get in touch with our team for admissions guidance, support, or to schedule a visit to our premium student hostels.'
+        'Have questions about AuraLivings? Get in touch with our team for admissions guidance, support, or to schedule a visit to our premium student hostels.'
     );
     const [formData, setFormData]=useState({name: '', email: '', phone: '', subject: '', message: ''});
     const [isSubmitting, setIsSubmitting]=useState(false);
@@ -123,7 +123,7 @@ export default function ContactPage()
                             <span className="bg-[#f0ebd8] text-[#0d1b2a] px-2 inline-block">Conversation</span>
                         </h1>
                         <p className="c-sub text-sm sm:text-lg text-[#f0ebd8] opacity-75 max-w-xl mx-auto leading-relaxed">
-                            We're here to help you find your perfect home away from home. Reach out to our team today.
+                            We're here to help you find your perfect home away from home at AuraLivings. Reach out to our team today.
                         </p>
                     </div>
 

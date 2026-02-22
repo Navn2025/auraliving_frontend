@@ -15,17 +15,17 @@ export default function Home()
 {
     useMetadata(
         'Home',
-        'AuraLiving offers premium, design-forward student hostels built for ambition. Modern amenities, vibrant communities, and spaces that inspire.'
+        'AuraLivings offers premium, design-forward student hostels built for ambition. Modern amenities, vibrant communities, and spaces that inspire.'
     );
     const faqData=[
-        {id: 1, question: "What makes AuraLiving different from other student hostels?", answer: "AuraLiving is designed from the ground up for ambitious students — premium interiors, curated study environments, high-speed internet, and a community of motivated peers all in one place."},
+        {id: 1, question: "What makes AuraLivings different from other student hostels?", answer: "AuraLivings is designed from the ground up for ambitious students — premium interiors, curated study environments, high-speed internet, and a community of motivated peers all in one place."},
         {id: 2, question: "What accommodation options are available?", answer: "We offer fully furnished single, double, and shared rooms — each with ergonomic furniture, ample storage, and daily housekeeping."},
         {id: 3, question: "Are meals included?", answer: "Yes, wholesome, chef-curated meals are served thrice daily, with special dietary options available on request."},
-        {id: 4, question: "What study facilities does AuraLiving provide?", answer: "Dedicated silent study lounges, high-speed Wi-Fi (100 Mbps), whiteboards, and 24-hour reading rooms are available to all residents."},
-        {id: 5, question: "Is there an age or enrollment requirement?", answer: "AuraLiving is open to students enrolled in recognized colleges, universities, or coaching institutes. Working professionals are welcome at select locations."},
+        {id: 4, question: "What study facilities does AuraLivings provide?", answer: "Dedicated silent study lounges, high-speed Wi-Fi (100 Mbps), whiteboards, and 24-hour reading rooms are available to all residents."},
+        {id: 5, question: "Is there an age or enrollment requirement?", answer: "AuraLivings is open to students enrolled in recognized colleges, universities, or coaching institutes. Working professionals are welcome at select locations."},
         {id: 6, question: "How do I book a room?", answer: "You can reserve your spot directly through our website, call our admissions team, or visit the hostel for a personal tour."},
-        {id: 7, question: "What safety measures are in place?", answer: "Every AuraLiving property has biometric entry, 24/7 CCTV, on-site security staff, and emergency response protocols."},
-        {id: 8, question: "Are there recreational and social spaces?", answer: "Yes — rooftop lounges, co-working pods, game rooms, and regular community events make sure life at AuraLiving is as vibrant as it is purposeful."},
+        {id: 7, question: "What safety measures are in place?", answer: "Every AuraLivings property has biometric entry, 24/7 CCTV, on-site security staff, and emergency response protocols."},
+        {id: 8, question: "Are there recreational and social spaces?", answer: "Yes — rooftop lounges, co-working pods, game rooms, and regular community events make sure life at AuraLivings is as vibrant as it is purposeful."},
     ];
 
     const [openFaq, setOpenFaq]=useState(null);
@@ -115,13 +115,12 @@ export default function Home()
 
                     {/* Text */}
                     <div className="w-full lg:w-1/2 flex flex-col gap-6 text-center lg:text-left mt-8 lg:mt-0">
-                        <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl text-[#f0ebd8] leading-tight">
-                            <span className="font-bold block">Live Better.</span>
-                            <span className="block">Study</span>
-                            <span className="font-bold bg-[#f0ebd8] text-[#0d1b2a] inline-block px-3 py-1 mt-2">Harder.</span>
+                        <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-[#f0ebd8] leading-tight">
+                            <span className="font-bold block">Live Like</span>
+                            <span className="font-bold bg-[#f0ebd8] text-[#0d1b2a] inline-block px-3 py-1 mt-2">Home.</span>
                         </h1>
                         <p className="hero-subtitle text-[#f0ebd8] text-base sm:text-lg lg:text-xl max-w-lg mx-auto lg:mx-0 leading-relaxed opacity-90">
-                            AuraLiving — premium student housing where design meets discipline and every detail is built for your success.
+                            AuraLivings — premium student housing where design meets discipline and every detail is built for your success.
                         </p>
                         <div className="hero-btn flex justify-center lg:justify-start pt-2">
                             <button

@@ -33,7 +33,7 @@ export default function AdminLogin()
         <div className="bg-[#f0ebd8] rounded-3xl p-8 shadow-2xl">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-[#0d1b2a]">Admin Panel</h1>
-            <p className="text-[#0d1b2a]/70 mt-2">AuraLiving</p>
+            <p className="text-[#0d1b2a]/70 mt-2">AuraLivings</p>
           </div>
 
           {error&&(

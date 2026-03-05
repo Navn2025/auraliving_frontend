@@ -11,6 +11,8 @@ const HostelCard=(props) =>
 
     // Format price with currency symbol
     const formattedPrice=`₹${props.price?.toLocaleString('en-IN')||'0'}`;
+    const hasDiscount=props.discountedPrice&&props.discountedPrice<props.price;
+    const formattedDiscountedPrice=hasDiscount? `₹${props.discountedPrice?.toLocaleString('en-IN')}`:null;
 
     // Calculate reviews count from rating (placeholder logic)
     const reviewsCount=Math.floor((props.rating||0)*10);
@@ -112,10 +114,22 @@ const HostelCard=(props) =>
                         </div>
 
                         <div className='text-right'>
-                            <p className='text-[#0d1b2a] text-lg sm:text-xl font-black'>
-                                {formattedPrice}
-                                <span className='text-xs font-normal opacity-50 ml-0.5 tracking-tight'>/mo</span>
-                            </p>
+                            {hasDiscount? (
+                                <>
+                                    <p className='text-[#0d1b2a]/50 text-xs sm:text-sm line-through'>
+                                        {formattedPrice}
+                                    </p>
+                                    <p className='text-[#0d1b2a] text-lg sm:text-xl font-black'>
+                                        {formattedDiscountedPrice}
+                                        <span className='text-xs font-normal opacity-50 ml-0.5 tracking-tight'>/mo</span>
+                                    </p>
+                                </>
+                            ):(
+                                <p className='text-[#0d1b2a] text-lg sm:text-xl font-black'>
+                                    {formattedPrice}
+                                    <span className='text-xs font-normal opacity-50 ml-0.5 tracking-tight'>/mo</span>
+                                </p>
+                            )}
                         </div>
                     </div>
 

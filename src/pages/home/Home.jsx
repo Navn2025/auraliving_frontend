@@ -9,7 +9,7 @@ import img4 from '../../assets/img4.jpg';
 import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer';
 import useMetadata from '../../hooks/useMetadata';
-import {getApprovedReviews, submitReview, getPopularHostels} from '../../api/hostel.api';
+import {getApprovedReviews, submitReview, getPopularHostels, getSiteSettings} from '../../api/hostel.api';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +37,7 @@ export default function Home()
     const [reviewSuccess, setReviewSuccess]=useState(false);
     const [displayReviews, setDisplayReviews]=useState([]);
     const [popularHostels, setPopularHostels]=useState([]);
+    const [siteImages, setSiteImages]=useState(null);
     const navigate=useNavigate();
     const mainRef=useRef(null);
     const toggleFaq=(id) => setOpenFaq(openFaq===id? null:id);
@@ -69,6 +70,7 @@ export default function Home()
     {
         fetchReviews();
         getPopularHostels().then(setPopularHostels).catch(() => {});
+        getSiteSettings().then(setSiteImages).catch(() => {});
     }, []);
 
     const handleReviewSubmit=async (e) =>
@@ -172,7 +174,7 @@ export default function Home()
 
             {/* ═══════════════ HERO ═══════════════ */}
             <section
-                style={{backgroundImage: "url('/main1.png')", backgroundPosition: "center", backgroundSize: "cover"}}
+                style={{backgroundImage: `url('${siteImages?.heroBg||'/main1.png'}')`, backgroundPosition: "center", backgroundSize: "cover"}}
                 className="min-h-screen w-full relative bg-[#0d1b2a] flex items-center"
             >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-12 py-24 lg:py-0">
@@ -204,11 +206,11 @@ export default function Home()
                         <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[26rem] lg:h-[26rem]">
                             {/* Main arch image */}
                             <div className="hero-img-main absolute inset-0 border-4 border-[#f0ebd8] rounded-t-full overflow-hidden bg-[#f0ebd8] shadow-2xl">
-                                <img src="/room1.jpg" alt="Hostel" className="w-full h-full object-cover" />
+                                <img src={siteImages?.heroMain||'/room1.jpg'} alt="Hostel" className="w-full h-full object-cover" />
                             </div>
                             {/* Small circle */}
                             <div className="hero-img-sub absolute -bottom-4 -left-4 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#f0ebd8] bg-[#f0ebd8] shadow-xl">
-                                <img src="/room2.jpg" alt="" className="w-full h-full object-cover" />
+                                <img src={siteImages?.heroSub||'/room2.jpg'} alt="" className="w-full h-full object-cover" />
                             </div>
                         </div>
                     </div>
@@ -219,7 +221,7 @@ export default function Home()
             <section className="about-section w-full bg-[#0d1b2a]">
                 <div className="container mx-auto flex flex-col lg:flex-row min-h-[28rem] lg:min-h-[36rem]">
                     <div className="about-img w-full lg:w-2/5 h-64 sm:h-72 md:h-80 lg:h-auto relative overflow-hidden lg:rounded-tr-[200px]">
-                        <img src="/room3.jpg" alt="" className="h-full w-full object-cover" />
+                        <img src={siteImages?.aboutImage||'/room3.jpg'} alt="" className="h-full w-full object-cover" />
                     </div>
                     <div className="about-text w-full lg:w-3/5 flex justify-center items-center p-6 sm:p-10 lg:p-16">
                         <div className="max-w-xl text-[#f0ebd8] space-y-4 sm:space-y-6 text-center lg:text-left">
@@ -285,9 +287,9 @@ export default function Home()
                         </div>
                         <div className="w-full lg:w-1/2 flex items-end justify-center gap-2 sm:gap-5" style={{height: '18rem'}}>
                             {[
-                                {src: img1, h: 'h-[70%]'},
-                                {src: img2, h: 'h-[90%]'},
-                                {src: img3, h: 'h-[70%]'},
+                                {src: siteImages?.exploreImages?.[0]||img1, h: 'h-[70%]'},
+                                {src: siteImages?.exploreImages?.[1]||img2, h: 'h-[90%]'},
+                                {src: siteImages?.exploreImages?.[2]||img3, h: 'h-[70%]'},
                             ].map(({src, h}, i) => (
                                 <div key={i} className={`destination-img flex-1 max-w-[6rem] sm:max-w-[9rem] lg:max-w-[10rem] ${h} bg-[#f0ebd8] rounded-t-full overflow-hidden`}>
                                     <img src={src} alt="" className="h-full w-full object-cover object-center" />
@@ -435,7 +437,7 @@ export default function Home()
                         </div>
                     </div>
                     <div className="homefeel-img w-full lg:w-1/3 h-64 sm:h-80 lg:h-auto overflow-hidden lg:rounded-tl-[10rem] order-1 lg:order-2">
-                        <img src={img4} alt="" className="h-full w-full object-cover object-center" />
+                        <img src={siteImages?.homeFeelImage||img4} alt="" className="h-full w-full object-cover object-center" />
                     </div>
                 </div>
             </section>

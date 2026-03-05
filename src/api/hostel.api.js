@@ -16,3 +16,10 @@ export const submitReview=async (data) =>
 export const getHostels=async () => await axios.get('/hostels');
 export const getPopularHostels=async () => {const res=await axios.get('/hostels/popular'); return res.data;};
 export const getHostelById=async (id) => await axios.get(`/hostels/${id}`);
+
+/* ── Public: get site images/settings ── */
+export const getSiteSettings=async () =>
+{
+    const response=await axios.get('/site-settings');
+    return response.data;
+};

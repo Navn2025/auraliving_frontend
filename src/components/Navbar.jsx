@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import React, {useEffect, useState, useRef} from "react";
+import {NavLink, useNavigate} from "react-router-dom";
 import gsap from "gsap";
 import logo from "../assets/logo.png";
 
@@ -8,6 +8,10 @@ const Nav=() =>
     const [show, setShow]=useState(true);
     const [lastY, setLastY]=useState(0);
     const [menuOpen, setMenuOpen]=useState(false);
+    const [searchOpen, setSearchOpen]=useState(false);
+    const [searchQuery, setSearchQuery]=useState("");
+    const searchInputRef=useRef(null);
+    const navigate=useNavigate();
 
     /* Hide / Show Navbar on Scroll */
     useEffect(() =>
@@ -93,6 +97,45 @@ const Nav=() =>
         });
     };
 
+    /* Search handlers */
+    const toggleSearch=() =>
+    {
+        if (searchOpen)
+        {
+            gsap.to(".search-bar", {width: 0, opacity: 0, duration: 0.3, ease: "power2.inOut", onComplete: () => setSearchOpen(false)});
+        } else
+        {
+            setSearchOpen(true);
+            setTimeout(() =>
+            {
+                gsap.fromTo(".search-bar", {width: 0, opacity: 0}, {width: "100%", opacity: 1, duration: 0.35, ease: "power2.out"});
+                searchInputRef.current?.focus();
+            }, 10);
+        }
+    };
+
+    const handleSearchSubmit=(e) =>
+    {
+        e.preventDefault();
+        if (searchQuery.trim())
+        {
+            navigate(`/hostel?search=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery("");
+            setSearchOpen(false);
+        }
+    };
+
+    const handleMobileSearch=(e) =>
+    {
+        e.preventDefault();
+        if (searchQuery.trim())
+        {
+            navigate(`/hostel?search=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery("");
+            closeMenu();
+        }
+    };
+
     return (
         <nav>
             <div
@@ -137,6 +180,23 @@ const Nav=() =>
                         ></div>
 
                         <div className="mobile-menu lg:hidden fixed top-0 left-0 w-64 sm:w-72 h-screen bg-[#f0ebd8] border-r-2 border-[#0d1b2a] z-50 p-6 sm:p-8 pt-16 sm:pt-20 flex flex-col gap-6">
+                            {/* Mobile Search */}
+                            <form onSubmit={handleMobileSearch} className="flex items-center border-2 border-[#0d1b2a] bg-white">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search hostels..."
+                                    className="flex-1 px-3 py-2 text-sm text-[#0d1b2a] placeholder-[#0d1b2a]/40 outline-none bg-transparent"
+                                />
+                                <button type="submit" className="px-3 py-2 text-[#0d1b2a] hover:text-[#0d1b2a]/70">
+                                    <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    </svg>
+                                </button>
+                            </form>
+
                             {["/", "/hostel", "/contact"].map((path) => (
                                 <NavLink
                                     key={path}
@@ -172,8 +232,32 @@ const Nav=() =>
                     </NavLink>
                 </div>
 
-                {/* Empty div for spacing */}
-                <div className="w-20 sm:w-24"></div>
+                {/* Search */}
+                <div className="flex items-center gap-2">
+                    {searchOpen&&(
+                        <form onSubmit={handleSearchSubmit} className="search-bar overflow-hidden">
+                            <input
+                                ref={searchInputRef}
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search by name or city..."
+                                className="w-36 sm:w-48 lg:w-56 bg-[#0d1b2a] text-[#f0ebd8] placeholder-[#f0ebd8]/50 text-sm px-3 py-1.5 outline-none border border-[#0d1b2a] focus:border-[#f0ebd8]/40 transition-colors"
+                                onBlur={() => {if (!searchQuery) {gsap.to(".search-bar", {width: 0, opacity: 0, duration: 0.3, onComplete: () => setSearchOpen(false)});} }}
+                            />
+                        </form>
+                    )}
+                    <button
+                        onClick={toggleSearch}
+                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[#0d1b2a] hover:text-[#0d1b2a]/70 transition-colors"
+                        aria-label="Search"
+                    >
+                        <svg className="w-5 h-5 sm:w-[22px] sm:h-[22px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </nav>
     );

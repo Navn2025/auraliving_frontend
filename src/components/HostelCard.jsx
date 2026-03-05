@@ -77,14 +77,19 @@ const HostelCard=(props) =>
                     </div>
 
                     {/* Gender & Type Tags */}
-                    {(props.gender||props.hostelType)&&(
+                    {(props.gender||props.hostelType||props.flatType||props.propertyType)&&(
                         <div className='flex flex-wrap gap-2'>
                             {props.gender&&(
                                 <span className='bg-[#0d1b2a] text-[#f0ebd8] px-2.5 py-1 text-[10px] sm:text-xs font-semibold rounded-sm'>
                                     {props.gender}
                                 </span>
                             )}
-                            {props.hostelType&&(
+                            {props.propertyType==='flat'&&props.flatType&&(
+                                <span className='bg-[#0d1b2a] text-[#f0ebd8] px-2.5 py-1 text-[10px] sm:text-xs font-semibold rounded-sm'>
+                                    {props.flatType}
+                                </span>
+                            )}
+                            {props.propertyType!=='flat'&&props.hostelType&&(
                                 <span className='bg-[#0d1b2a] text-[#f0ebd8] px-2.5 py-1 text-[10px] sm:text-xs font-semibold rounded-sm'>
                                     {props.hostelType}
                                 </span>
@@ -114,8 +119,8 @@ const HostelCard=(props) =>
                         </div>
                     </div>
 
-                    {/* Beds Available */}
-                    {props.totalRemainingBeds>0&&(
+                    {/* Beds Available — hostel only */}
+                    {props.propertyType!=='flat'&&props.totalRemainingBeds>0&&(
                         <div className='flex items-center gap-1.5 text-xs sm:text-sm text-[#0d1b2a]'>
                             <div className={`w-2 h-2 rounded-full ${props.totalRemainingBeds<5? 'bg-red-500':'bg-green-500'}`}></div>
                             <span className='opacity-70'>

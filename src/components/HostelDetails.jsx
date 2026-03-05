@@ -104,8 +104,8 @@ const HostelPage=() =>
                     {/* Header */}
                     <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-xs sm:text-sm font-medium">
-                            {hostel.comming_soon&&<span className="animate-pulse">🔥 Coming Soon</span>}
-                            {hostel.popular&&!hostel.comming_soon&&<span>⭐ Popular Choice</span>}
+                            {hostel.comming_soon&&<span className="animate-pulse flex items-center gap-1.5"><svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23C10.6192 23 9.32067 22.4595 8.3988 21.5024C7.95049 21.0314 7.59483 20.4709 7.35451 19.8516C6.35408 20.1685 5.26066 20.0701 4.32679 19.5318C3.02143 18.778 2.34702 17.3325 2.53794 15.8774C2.60588 15.337 2.79145 14.8284 3.07496 14.3813C2.24553 13.891 1.58191 13.1331 1.20631 12.1839C0.690039 10.8812 0.915615 9.41567 1.79291 8.31974C2.17045 7.84748 2.63895 7.46139 3.16714 7.18399C2.87728 6.39447 2.81078 5.52943 2.99697 4.67034C3.28838 3.29553 4.25239 2.17786 5.53636 1.6348C6.03768 1.42238 6.57023 1.30658 7.10537 1.28926C7.13254 0.49289 7.52116 -0.240798 8.18952 -0.687116L8.39003 -0.810974C9.32614 -1.43199 10.5512 -1.30432 11.3472 -0.499963L12 0.157106L12.6528 -0.499963C13.4488 -1.30432 14.6739 -1.43199 15.61 -0.810974L15.8105 -0.687116C16.4789 -0.240798 16.8675 0.49289 16.8946 1.28926C17.4298 1.30658 17.9623 1.42238 18.4636 1.6348C19.7476 2.17786 20.7116 3.29553 21.003 4.67034C21.1892 5.52943 21.1227 6.39447 20.8329 7.18399C21.361 7.46139 21.8295 7.84748 22.2071 8.31974C23.0844 9.41567 23.31 10.8812 22.7937 12.1839C22.4181 13.1331 21.7545 13.891 20.925 14.3813C21.2086 14.8284 21.3941 15.337 21.4621 15.8774C21.653 17.3325 20.9786 18.778 19.6732 19.5318C18.7393 20.0701 17.6459 20.1685 16.6455 19.8516C16.4052 20.4709 16.0495 21.0314 15.6012 21.5024C14.6793 22.4595 13.3808 23 12 23ZM12 21C14.2091 21 16 19.2091 16 17V12H8V17C8 19.2091 9.79086 21 12 21Z"></path></svg> Coming Soon</span>}
+                            {hostel.popular&&!hostel.comming_soon&&<span className="flex items-center gap-1.5"><svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z"></path></svg> Popular Choice</span>}
                         </div>
                         <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#f0ebd8] leading-tight">
                             {hostel.name}
@@ -183,15 +183,27 @@ const HostelPage=() =>
             <section className="w-full bg-[#f0ebd8] py-8 sm:py-12">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-                        <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
-                                <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
-                                    <path d="M21 16V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V16H21ZM3 13H21V15H3V13ZM3 8H21V11H3V8ZM21 3C21.5523 3 22 3.44772 22 4V6H2V4C2 3.44772 2.44772 3 3 3H21Z"></path>
-                                </svg>
+                        {hostel.propertyType==='flat'? (
+                            <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
+                                    <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                        <path d="M17 19H21V21H3V19H7V4C7 3.44772 7.44772 3 8 3H16C16.5523 3 17 3.44772 17 4V19ZM9 5V19H15V5H9ZM11 11H13V13H11V11Z"></path>
+                                    </svg>
+                                </div>
+                                <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.flatType||'Flat'}</p>
+                                <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Flat Type</p>
                             </div>
-                            <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.totalRemainingBeds}</p>
-                            <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Beds Left</p>
-                        </div>
+                        ):(
+                            <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
+                                    <svg className="w-5 h-5 sm:w-6 sm:h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                        <path d="M21 16V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V16H21ZM3 13H21V15H3V13ZM3 8H21V11H3V8ZM21 3C21.5523 3 22 3.44772 22 4V6H2V4C2 3.44772 2.44772 3 3 3H21Z"></path>
+                                    </svg>
+                                </div>
+                                <p className="text-xl sm:text-3xl font-black text-[#f0ebd8]">{hostel.totalRemainingBeds}</p>
+                                <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wider text-[#f0ebd8]/60">Beds Left</p>
+                            </div>
+                        )}
 
                         <div className="bg-[#0d1b2a] p-4 sm:p-6 lg:p-8 rounded-xl text-center space-y-2 border border-[#f0ebd8]/10">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center mx-auto mb-1">
@@ -231,7 +243,7 @@ const HostelPage=() =>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-[#f0ebd8] p-6 sm:p-8 lg:p-12 rounded-2xl space-y-6">
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">About This Hostel</h2>
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">About This {hostel.propertyType==='flat'? 'Flat':'Hostel'}</h2>
                             <p className="text-base sm:text-lg text-[#0d1b2a] leading-relaxed">{hostel.description}</p>
 
                             {hostel.usps&&hostel.usps.length>0&&(
@@ -359,29 +371,55 @@ const HostelPage=() =>
                                     <path d="M12 19H14V6.00003L20.3939 8.74028C20.7616 8.89786 21 9.2594 21 9.65943V19H23V21H1V19H3V5.6499C3 5.25472 3.23273 4.89659 3.59386 4.73609L11.2969 1.31251C11.5493 1.20035 11.8448 1.314 11.9569 1.56634C11.9853 1.63027 12 1.69945 12 1.76941V19Z"></path>
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-bold text-[#f0ebd8]">Hostel Type</h3>
-                            <p className="text-[#f0ebd8]/80">{hostel.hostelType}</p>
+                            <h3 className="text-xl font-bold text-[#f0ebd8]">{hostel.propertyType==='flat'? 'Flat Type':'Hostel Type'}</h3>
+                            <p className="text-[#f0ebd8]/80">{hostel.propertyType==='flat'? (hostel.flatType||'Flat'):hostel.hostelType}</p>
                         </div>
 
-                        <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
-                            <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
-                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
-                                    <path d="M2 19H22V21H2V19ZM2 5L7 8.5V13H9V8.5L14 5V17H16V5L21 8.5V17H22V7L12 1L2 7V17H2V5ZM4 9.23L4 12H6V9.23L4 9.23ZM8 10.05L8 12H10V10.05L8 10.05ZM16 8.5L18 9.5V12H20V10.05L18 9.05L16 8.05V8.5Z"></path>
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-[#f0ebd8]">Total Capacity</h3>
-                            <p className="text-[#f0ebd8]/80">{hostel.capacity} Students</p>
-                        </div>
+                        {hostel.propertyType!=='flat'? (
+                            <>
+                                <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
+                                    <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
+                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                            <path d="M2 19H22V21H2V19ZM2 5L7 8.5V13H9V8.5L14 5V17H16V5L21 8.5V17H22V7L12 1L2 7V17H2V5ZM4 9.23L4 12H6V9.23L4 9.23ZM8 10.05L8 12H10V10.05L8 10.05ZM16 8.5L18 9.5V12H20V10.05L18 9.05L16 8.05V8.5Z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#f0ebd8]">Total Capacity</h3>
+                                    <p className="text-[#f0ebd8]/80">{hostel.capacity} Students</p>
+                                </div>
 
-                        <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
-                            <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
-                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
-                                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM8.5 14.5L6 12L4.5 13.5L8.5 17.5L19 7L17.5 5.5L8.5 14.5Z"></path>
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-[#f0ebd8]">Occupancy Rate</h3>
-                            <p className="text-[#f0ebd8]/80">{hostel.occupancy}% Full</p>
-                        </div>
+                                <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
+                                    <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
+                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                            <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM8.5 14.5L6 12L4.5 13.5L8.5 17.5L19 7L17.5 5.5L8.5 14.5Z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#f0ebd8]">Occupancy Rate</h3>
+                                    <p className="text-[#f0ebd8]/80">{hostel.occupancy}% Full</p>
+                                </div>
+                            </>
+                        ):(
+                            <>
+                                <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
+                                    <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
+                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                            <path d="M2 22C2 17.5817 5.58172 14 10 14C14.4183 14 18 17.5817 18 22H2ZM10 13C6.685 13 4 10.315 4 7C4 3.685 6.685 1 10 1C13.315 1 16 3.685 16 7C16 10.315 13.315 13 10 13Z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#f0ebd8]">For</h3>
+                                    <p className="text-[#f0ebd8]/80">{hostel.gender}</p>
+                                </div>
+
+                                <div className="bg-[#0d1b2a] p-6 rounded-xl space-y-3">
+                                    <div className="w-12 h-12 bg-[#f0ebd8] rounded-full flex items-center justify-center">
+                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0d1b2a">
+                                            <path d="M17 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9V3H15V1H17V3ZM4 9V19H20V9H4ZM6 11H8V13H6V11ZM6 15H8V17H6V15ZM10 11H18V13H10V11ZM10 15H15V17H10V15Z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#f0ebd8]">Monthly Rent</h3>
+                                    <p className="text-[#f0ebd8]/80">₹{hostel.price?.toLocaleString('en-IN')}</p>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>

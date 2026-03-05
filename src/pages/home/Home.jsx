@@ -9,6 +9,7 @@ import img4 from '../../assets/img4.jpg';
 import logo from '../../assets/logo.png';
 import Footer from '../../components/Footer';
 import useMetadata from '../../hooks/useMetadata';
+import {getApprovedReviews, submitReview, getPopularHostels} from '../../api/hostel.api';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,10 +31,59 @@ export default function Home()
     ];
 
     const [openFaq, setOpenFaq]=useState(null);
+    const [showReviewModal, setShowReviewModal]=useState(false);
+    const [reviewForm, setReviewForm]=useState({name: '', role: '', rating: 5, text: ''});
+    const [reviewSubmitting, setReviewSubmitting]=useState(false);
+    const [reviewSuccess, setReviewSuccess]=useState(false);
+    const [displayReviews, setDisplayReviews]=useState([]);
+    const [popularHostels, setPopularHostels]=useState([]);
     const navigate=useNavigate();
     const mainRef=useRef(null);
     const toggleFaq=(id) => setOpenFaq(openFaq===id? null:id);
 
+    const dummyReviews=[
+        {name: 'Aarav Sharma', role: 'B.Tech Student', rating: 5, text: 'AuraLivings completely changed my hostel experience. The rooms are spotless, the food is amazing, and the study environment is unmatched. I genuinely feel at home here.'},
+        {name: 'Priya Patel', role: 'MBA Student', rating: 5, text: 'I was skeptical at first, but the community here is incredible. Made lifelong friends and the amenities are top-notch. Best decision I ever made for my college life!'},
+        {name: 'Rohit Verma', role: 'CA Aspirant', rating: 4, text: 'The 24/7 study rooms and high-speed Wi-Fi are a game changer for my preparation. The staff is super supportive and the security gives my parents complete peace of mind.'},
+        {name: 'Sneha Gupta', role: 'Medical Student', rating: 5, text: 'Clean rooms, nutritious meals, and a quiet atmosphere — everything a medical student needs. The yoga sessions in the morning are the cherry on top!'},
+        {name: 'Arjun Malhotra', role: 'Engineering Student', rating: 5, text: 'From the modern interiors to the vibrant community events, AuraLivings sets a new standard. I recommend it to every student looking for premium living.'},
+        {name: 'Kavya Reddy', role: 'Design Student', rating: 4, text: 'The aesthetic of this place is inspiring. Every corner is thoughtfully designed. It really boosts my creativity and keeps me motivated throughout the day.'},
+    ];
+
+    /* Fetch approved reviews and fill with dummy if < 6 */
+    const fetchReviews=async () =>
+    {
+        try
+        {
+            const approved=await getApprovedReviews();
+            const real=approved.map(r => ({name: r.name, role: r.role, rating: r.rating, text: r.text}));
+            if (real.length>=6) {setDisplayReviews(real.slice(0, 6));}
+            else {setDisplayReviews([...real, ...dummyReviews.slice(0, 6-real.length)]);}
+        } catch
+        {
+            setDisplayReviews(dummyReviews);
+        }
+    };
+
+    useEffect(() =>
+    {
+        fetchReviews();
+        getPopularHostels().then(setPopularHostels).catch(() => {});
+    }, []);
+
+    const handleReviewSubmit=async (e) =>
+    {
+        e.preventDefault();
+        setReviewSubmitting(true);
+        setReviewSuccess(false);
+        try
+        {
+            await submitReview(reviewForm);
+            setReviewSuccess(true);
+            setReviewForm({name: '', role: '', rating: 5, text: ''});
+        } catch {}
+        setReviewSubmitting(false);
+    };
     useEffect(() =>
     {
         const ctx=gsap.context(() =>
@@ -60,6 +110,11 @@ export default function Home()
             gsap.from('.destinations-text', {x: -60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: {trigger: '.destinations-section', start: 'top 80%', once: true}});
             gsap.from('.destination-img', {y: 80, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'back.out(1.3)', scrollTrigger: {trigger: '.destinations-section', start: 'top 78%', once: true}});
 
+            /* ── POPULAR DESTINATIONS ── */
+            gsap.from('.popular-heading', {y: 50, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: {trigger: '.popular-section', start: 'top 82%', once: true}});
+            gsap.from('.popular-card', {y: 70, opacity: 0, rotation: 2, duration: 0.8, stagger: 0.2, ease: 'back.out(1.4)', scrollTrigger: {trigger: '.popular-grid', start: 'top 85%', once: true}});
+            gsap.from('.popular-btn', {y: 30, opacity: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: {trigger: '.popular-btn', start: 'top 92%', once: true}});
+
             /* ── WHY CHOOSE US ── */
             gsap.from('.why-heading', {y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: {trigger: '.why-section', start: 'top 82%', once: true}});
             gsap.from('.why-left', {x: -100, opacity: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out', scrollTrigger: {trigger: '.why-rows', start: 'top 82%', once: true}});
@@ -72,8 +127,15 @@ export default function Home()
             /* ── STATS ── */
             gsap.from('.stat-card', {y: 80, opacity: 0, duration: 0.8, stagger: 0.18, ease: 'back.out(1.4)', scrollTrigger: {trigger: '.stats-section', start: 'top 82%', once: true}});
 
+            /* ── REVIEWS ── */
+            gsap.from('.reviews-heading', {y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: {trigger: '.reviews-section', start: 'top 85%', once: true}});
+            gsap.from('.review-card', {y: 60, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'back.out(1.3)', scrollTrigger: {trigger: '.reviews-grid', start: 'top 85%', once: true}});
+
             /* ── CTA ── */
             gsap.from('.cta-content', {scale: 0.88, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: {trigger: '.cta-section', start: 'top 82%', once: true}});
+
+            /* ── WHATSAPP CONTACT ── */
+            gsap.from('.wa-contact-content', {y: 50, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: {trigger: '.wa-contact-section', start: 'top 82%', once: true}});
 
             /* ── FAQ ── */
             gsap.from('.faq-heading', {y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: {trigger: '.faq-section', start: 'top 85%', once: true}});
@@ -205,26 +267,22 @@ export default function Home()
                 </div>
             </section>
 
-            {/* ═══════════════ POPULAR DESTINATIONS ═══════════════ */}
+            {/* ═══════════════ EXPLORE OUR SPACES ═══════════════ */}
             <section className="destinations-section w-full bg-[#0d1b2a] py-14 sm:py-16 lg:py-24">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
-
-                        {/* Text */}
                         <div className="destinations-text w-full lg:w-1/2 space-y-5 text-center lg:text-left">
                             <span className="inline-block px-4 py-2 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-xs sm:text-sm font-medium">
-                                Featured Hostels
+                                Our Spaces
                             </span>
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#f0ebd8]">Popular Destinations</h2>
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#f0ebd8]">Designed for Comfort & Focus</h2>
                             <p className="text-sm sm:text-base lg:text-lg text-[#f0ebd8] opacity-90">
-                                Discover our most loved hostels across India, each designed to nurture your academic journey.
+                                Step into thoughtfully crafted living spaces where every detail is designed to help you thrive — modern interiors, natural light, and a vibrant atmosphere.
                             </p>
                             <button onClick={() => navigate('/hostel')} className="px-6 sm:px-8 py-3 sm:py-4 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-sm sm:text-base font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
-                                View All Hostels
+                                Explore Hostels
                             </button>
                         </div>
-
-                        {/* Arch images */}
                         <div className="w-full lg:w-1/2 flex items-end justify-center gap-2 sm:gap-5" style={{height: '18rem'}}>
                             {[
                                 {src: img1, h: 'h-[70%]'},
@@ -236,6 +294,81 @@ export default function Home()
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ═══════════════ POPULAR DESTINATIONS ═══════════════ */}
+            <section className="popular-section w-full bg-[#f0ebd8] py-14 sm:py-16 lg:py-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="popular-heading text-center mb-10 sm:mb-14 space-y-3">
+                        <span className="inline-block px-4 py-2 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-xs sm:text-sm font-medium">
+                            Top Picks
+                        </span>
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">Popular Destinations</h2>
+                        <p className="text-sm sm:text-base lg:text-lg text-[#0d1b2a]/70 max-w-2xl mx-auto">
+                            Our most loved hostels, handpicked by students just like you.
+                        </p>
+                    </div>
+
+                    {popularHostels.length>0? (
+                        <div className="popular-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+                            {popularHostels.map((h) => (
+                                <div key={h._id}
+                                    onClick={() => navigate(`/hostel/${h._id}`)}
+                                    className="popular-card group relative bg-[#0d1b2a] p-2 overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl cursor-pointer hover:-translate-y-2">
+                                    <div className="border-2 border-[#f0ebd8]/20">
+                                        <div className="relative h-48 sm:h-52 w-full overflow-hidden">
+                                            <img src={h.images?.[0]||img1} alt={h.name}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                            {h.popular&&(
+                                                <div className="absolute top-2 right-2 bg-[#f0ebd8] text-[#0d1b2a] px-2 py-1 text-[10px] sm:text-xs font-bold shadow-lg flex items-center gap-1">
+                                                    <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                    </svg>
+                                                    Popular
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-[#0d1b2a]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        </div>
+                                        <div className="p-4 sm:p-5 space-y-3">
+                                            <div className="space-y-1">
+                                                <h3 className="text-base sm:text-lg font-bold text-[#f0ebd8] line-clamp-1">{h.name}</h3>
+                                                <p className="text-[#f0ebd8] text-xs sm:text-sm flex items-center gap-1.5 opacity-70">
+                                                    <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span className="line-clamp-1">{h.location}</span>
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center justify-between pt-3 border-t border-[#f0ebd8]/15">
+                                                <div className="flex items-center gap-1.5">
+                                                    <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                    </svg>
+                                                    <span className="text-[#f0ebd8] font-bold text-sm sm:text-base">{h.rating?.toFixed(1)||'N/A'}</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-[#f0ebd8] text-lg sm:text-xl font-black">
+                                                        ₹{h.price?.toLocaleString()}
+                                                        <span className="text-xs font-normal opacity-50 ml-0.5">/mo</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute inset-0 border-2 border-[#f0ebd8]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                </div>
+                            ))}
+                        </div>
+                    ):(
+                        <p className="text-center text-[#0d1b2a]/50 text-sm">No popular hostels yet.</p>
+                    )}
+
+                    <div className="popular-btn text-center mt-10 sm:mt-12">
+                        <button onClick={() => navigate('/hostel')} className="px-6 sm:px-8 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
+                            View All Hostels
+                        </button>
                     </div>
                 </div>
             </section>
@@ -343,18 +476,166 @@ export default function Home()
                 </div>
             </section>
 
+            {/* ═══════════════ REVIEWS ═══════════════ */}
+            <section className="reviews-section w-full bg-[#f0ebd8] py-14 sm:py-16 lg:py-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="reviews-heading text-center mb-10 sm:mb-14 space-y-3">
+                        <span className="inline-block px-4 py-2 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-xs sm:text-sm font-semibold">
+                            Testimonials
+                        </span>
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">
+                            What Our Residents Say
+                        </h2>
+                        <p className="text-sm sm:text-base text-[#0d1b2a] opacity-75 max-w-xl mx-auto">
+                            Hear from students who made AuraLivings their home away from home.
+                        </p>
+                    </div>
+                    <div className="reviews-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+                        {displayReviews.map((review, i) => (
+                            <div key={i} className="review-card bg-[#0d1b2a] rounded-2xl p-6 sm:p-7 flex flex-col gap-4 hover:-translate-y-2 transition-transform duration-300 shadow-md">
+                                {/* Stars */}
+                                <div className="flex gap-1">
+                                    {Array.from({length: 5}).map((_, s) => (
+                                        <svg key={s} className={`w-5 h-5 ${s<review.rating? 'text-yellow-500':'text-gray-600'}`} fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z" />
+                                        </svg>
+                                    ))}
+                                </div>
+                                {/* Quote */}
+                                <p className="text-sm sm:text-base text-[#f0ebd8] opacity-80 leading-relaxed flex-1">
+                                    "{review.text}"
+                                </p>
+                                {/* Author */}
+                                <div className="flex items-center gap-3 pt-2 border-t border-[#f0ebd8]/20">
+                                    <div className="w-10 h-10 bg-[#f0ebd8] rounded-full flex items-center justify-center text-[#0d1b2a] font-bold text-sm">
+                                        {review.name.split(' ').map(n => n[0]).join('')}
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-[#f0ebd8]">{review.name}</p>
+                                        <p className="text-xs text-[#f0ebd8] opacity-60">{review.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {/* Add Review Button */}
+                    <div className="text-center mt-10">
+                        <button onClick={() => {setReviewSuccess(false); setShowReviewModal(true);}}
+                            className="px-8 py-3 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
+                            Write a Review
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* ═══ REVIEW MODAL ═══ */}
+            {showReviewModal&&(
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
+                    onClick={(e) => {if (e.target===e.currentTarget) setShowReviewModal(false);}}>
+                    <div className="bg-[#f0ebd8] rounded-2xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl">
+                        <button onClick={() => setShowReviewModal(false)}
+                            className="absolute top-4 right-4 p-1 rounded-lg hover:bg-[#0d1b2a]/10 transition-colors">
+                            <svg className="w-5 h-5 text-[#0d1b2a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <h3 className="text-xl sm:text-2xl font-bold text-[#0d1b2a] mb-1">Write a Review</h3>
+                        <p className="text-xs text-[#0d1b2a]/60 mb-5">Your review will be visible after admin approval.</p>
+
+                        {reviewSuccess&&(
+                            <div className="mb-4 bg-green-500/20 border border-green-500 text-green-800 p-3 rounded-xl text-sm">
+                                Thank you! Your review has been submitted and will appear after approval.
+                            </div>
+                        )}
+
+                        <form onSubmit={handleReviewSubmit} className="space-y-4">
+                            <input required placeholder="Your Name" value={reviewForm.name}
+                                onChange={(e) => setReviewForm(p => ({...p, name: e.target.value}))}
+                                className="w-full px-4 py-3 rounded-xl bg-white border-2 border-[#0d1b2a]/15 focus:border-[#0d1b2a] outline-none text-[#0d1b2a] text-sm transition-colors" />
+                            <input required placeholder="Your Role (e.g. B.Tech Student)" value={reviewForm.role}
+                                onChange={(e) => setReviewForm(p => ({...p, role: e.target.value}))}
+                                className="w-full px-4 py-3 rounded-xl bg-white border-2 border-[#0d1b2a]/15 focus:border-[#0d1b2a] outline-none text-[#0d1b2a] text-sm transition-colors" />
+                            {/* Star rating selector */}
+                            <div>
+                                <label className="block text-xs font-semibold text-[#0d1b2a]/60 uppercase tracking-wider mb-2">Rating</label>
+                                <div className="flex gap-1">
+                                    {[1, 2, 3, 4, 5].map(star => (
+                                        <button key={star} type="button" onClick={() => setReviewForm(p => ({...p, rating: star}))}>
+                                            <svg className={`w-8 h-8 transition-colors ${star<=reviewForm.rating? 'text-yellow-500':'text-gray-300'}`} fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z" />
+                                            </svg>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <textarea required rows={4} placeholder="Share your experience..."
+                                value={reviewForm.text}
+                                onChange={(e) => setReviewForm(p => ({...p, text: e.target.value}))}
+                                className="w-full px-4 py-3 rounded-xl bg-white border-2 border-[#0d1b2a]/15 focus:border-[#0d1b2a] outline-none text-[#0d1b2a] text-sm resize-none transition-colors" />
+                            <button type="submit" disabled={reviewSubmitting}
+                                className="w-full py-3 rounded-xl bg-[#0d1b2a] text-[#f0ebd8] font-bold text-sm hover:bg-[#1a2d40] transition-colors disabled:opacity-50">
+                                {reviewSubmitting? 'Submitting…':'Submit Review'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             {/* ═══════════════ CTA ═══════════════ */}
-            <section className="cta-section w-full bg-[#f0ebd8] py-16 sm:py-20 lg:py-28">
+            <section className="cta-section w-full bg-[#0d1b2a] py-16 sm:py-20 lg:py-28">
                 <div className="cta-content container mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6">
-                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#0d1b2a] max-w-4xl mx-auto leading-tight">
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#f0ebd8] max-w-4xl mx-auto leading-tight">
                         Your Best Chapter Starts Here.
                     </h2>
-                    <p className="text-xs sm:text-base lg:text-lg text-[#0d1b2a] max-w-xl mx-auto leading-relaxed">
+                    <p className="text-xs sm:text-base lg:text-lg text-[#f0ebd8] max-w-xl mx-auto leading-relaxed">
                         Join thousands of students across India who chose AuraLiving as the launchpad for their biggest ambitions.
                     </p>
-                    <button onClick={() => navigate('/hostel')} className="px-6 sm:px-12 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base lg:text-lg font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
+                    <button onClick={() => navigate('/hostel')} className="px-6 sm:px-12 py-3 sm:py-4 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-sm sm:text-base lg:text-lg font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
                         Find Your Hostel
                     </button>
+                </div>
+            </section>
+
+            {/* ═══════════════ WHATSAPP CONTACT ═══════════════ */}
+            <section className="wa-contact-section w-full bg-[#f0ebd8] py-16 sm:py-20 lg:py-28 relative overflow-hidden">
+                <div className="absolute inset-0 opacity-5">
+                    <div className="absolute top-10 left-10 w-40 h-40 border border-[#0d1b2a] rounded-full"></div>
+                    <div className="absolute bottom-10 right-10 w-60 h-60 border border-[#0d1b2a] rounded-full"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-[#0d1b2a] rounded-full"></div>
+                </div>
+                <div className="wa-contact-content container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="max-w-3xl mx-auto text-center space-y-6 sm:space-y-8">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#0d1b2a]/10 rounded-full">
+                            <svg className="w-5 h-5 text-[#0d1b2a]" viewBox="0 0 448 512" fill="currentColor">
+                                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.8-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                            </svg>
+                            <span className="text-[#0d1b2a] text-xs sm:text-sm font-medium">Quick Connect</span>
+                        </div>
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#0d1b2a] leading-tight">
+                            Got Questions? Let's Chat!
+                        </h2>
+                        <p className="text-sm sm:text-base lg:text-lg text-[#0d1b2a]/70 max-w-xl mx-auto leading-relaxed">
+                            Reach out to us directly on WhatsApp for instant responses. Whether it's about pricing, availability, or a campus tour — we're here to help.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <a href="https://wa.me/918989140402?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AuraLivings%20hostel.%20Can%20you%20share%20more%20details%3F"
+                                target="_blank" rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base font-semibold hover:bg-[#1a2d40] hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg">
+                                <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 448 512" fill="currentColor">
+                                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.8-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                                </svg>
+                                Chat on WhatsApp
+                            </a>
+                            <a href="tel:+918989140402"
+                                className="inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 bg-transparent border-2 border-[#0d1b2a] text-[#0d1b2a] rounded-full text-sm sm:text-base font-medium hover:bg-[#0d1b2a] hover:text-[#f0ebd8] transition-all duration-200">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821Z" />
+                                </svg>
+                                Call Us
+                            </a>
+                        </div>
+                        <p className="text-xs sm:text-sm text-[#0d1b2a]/40">Available 9 AM – 9 PM • Typically replies within minutes</p>
+                    </div>
                 </div>
             </section>
 

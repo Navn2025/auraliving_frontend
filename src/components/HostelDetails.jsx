@@ -24,6 +24,26 @@ const HostelPage=() =>
     );
 
     const [primaryImage, setPrimaryImage]=useState(hostel?.images?.length>0? hostel.images[0]:null);
+    const [lightboxOpen, setLightboxOpen]=useState(false);
+    const [lightboxIndex, setLightboxIndex]=useState(0);
+
+    const openLightbox=(idx) => {setLightboxIndex(idx); setLightboxOpen(true); document.body.style.overflow='hidden';};
+    const closeLightbox=() => {setLightboxOpen(false); document.body.style.overflow='';};
+    const lightboxPrev=() => setLightboxIndex(i => (i-1+hostel.images.length)%hostel.images.length);
+    const lightboxNext=() => setLightboxIndex(i => (i+1)%hostel.images.length);
+
+    useEffect(() =>
+    {
+        if (!lightboxOpen) return;
+        const handleKey=(e) =>
+        {
+            if (e.key==='Escape') closeLightbox();
+            if (e.key==='ArrowLeft') lightboxPrev();
+            if (e.key==='ArrowRight') lightboxNext();
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [lightboxOpen]);
 
     useEffect(() =>
     {
@@ -114,11 +134,12 @@ const HostelPage=() =>
                                 {hostel.images&&hostel.images.length>0? (
                                     <div className="space-y-4">
                                         {/* Main Image */}
-                                        <div className="relative aspect-video sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-[#0d1b2a]">
+                                        <div className="relative aspect-video sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-[#0d1b2a] cursor-pointer group"
+                                            onClick={() => openLightbox(hostel.images.indexOf(primaryImage))}>
                                             <img
                                                 src={primaryImage}
                                                 alt={hostel.name}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                             />
                                         </div>
 
@@ -376,9 +397,9 @@ const HostelPage=() =>
                             Join the community and start your journey to success today. Book your visit or get in touch with us.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button onClick={() => navigate('/contact')} className="px-8 sm:px-10 py-3 sm:py-4 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-sm sm:text-base font-medium hover:bg-opacity-90 transition-all">
+                            <a href={`https://wa.me/918989140402?text=${encodeURIComponent(`Hi, I'd like to book a visit to ${hostel.name} in ${hostel.location}. Please share the available time slots.`)}`} target="_blank" rel="noopener noreferrer" className="px-8 sm:px-10 py-3 sm:py-4 bg-[#f0ebd8] text-[#0d1b2a] rounded-full text-sm sm:text-base font-medium hover:bg-opacity-90 transition-all text-center">
                                 Book a Visit
-                            </button>
+                            </a>
                             <button onClick={() => navigate('/contact')} className="px-8 sm:px-10 py-3 sm:py-4 bg-transparent border-2 border-[#f0ebd8] text-[#f0ebd8] rounded-full text-sm sm:text-base font-medium hover:bg-[#f0ebd8] hover:text-[#0d1b2a] transition-all">
                                 Contact Us
                             </button>
@@ -386,6 +407,52 @@ const HostelPage=() =>
                     </div>
                 </div>
             </section>
+            {/* Fullscreen Lightbox */}
+            {lightboxOpen&&hostel.images&&hostel.images.length>0&&(
+                <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center" onClick={closeLightbox}>
+                    {/* Close button */}
+                    <button onClick={closeLightbox}
+                        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 10.5858L16.9497 5.63604L18.364 7.05025L13.4142 12L18.364 16.9497L16.9497 18.364L12 13.4142L7.05025 18.364L5.63604 16.9497L10.5858 12L5.63604 7.05025L7.05025 5.63604L12 10.5858Z"></path>
+                        </svg>
+                    </button>
+
+                    {/* Prev button */}
+                    {hostel.images.length>1&&(
+                        <button onClick={(e) => {e.stopPropagation(); lightboxPrev();}}
+                            className="absolute left-2 sm:left-6 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path>
+                            </svg>
+                        </button>
+                    )}
+
+                    {/* Next button */}
+                    {hostel.images.length>1&&(
+                        <button onClick={(e) => {e.stopPropagation(); lightboxNext();}}
+                            className="absolute right-2 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13.1714 12.0007L8.22168 7.05093L9.63589 5.63672L15.9999 12.0007L9.63589 18.3646L8.22168 16.9504L13.1714 12.0007Z"></path>
+                            </svg>
+                        </button>
+                    )}
+
+                    {/* Image */}
+                    <img
+                        src={hostel.images[lightboxIndex]}
+                        alt={`${hostel.name} - Image ${lightboxIndex+1}`}
+                        className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+
+                    {/* Counter */}
+                    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 rounded-full text-white text-sm font-medium">
+                        {lightboxIndex+1} / {hostel.images.length}
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </main>
     );

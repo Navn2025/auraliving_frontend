@@ -5,7 +5,8 @@ import logo from '../../assets/logo.png';
 import
 {
   getAdminHostels, createHostel, updateHostel, deleteHostel,
-  getContacts, deleteContact, uploadImage
+  getContacts, deleteContact, uploadImage,
+  getAdminReviews, approveReview, deleteReview
 } from '../../api/admin.api';
 
 /* ─── tiny Toast helper ─── */
@@ -130,6 +131,7 @@ export default function AdminDashboard()
 {
   const [hostels, setHostels]=useState([]);
   const [contacts, setContacts]=useState([]);
+  const [reviews, setReviews]=useState([]);
   const [activeTab, setActiveTab]=useState('hostels');
   const [loading, setLoading]=useState(true);
   const [showForm, setShowForm]=useState(false);
@@ -145,7 +147,7 @@ export default function AdminDashboard()
   const blankForm={
     name: '', location: '', rating: '', price: '', gender: 'Co-ed', established: 2024,
     description: '', totalRemainingBeds: 0, capacity: 0, occupancy: 0, hostelType: 'Standard',
-    popular: false, comming_soon: false, features: [], usps: [],
+    popular: false, comming_soon: false, features: [], usps: [], featuresRaw: '', uspsRaw: '',
     nearby1: '', nearby1distance: '', nearby2: '', nearby2distance: '',
     nearby3: '', nearby3distance: '', locationLink: ''
   };
@@ -170,9 +172,10 @@ export default function AdminDashboard()
     setLoading(true);
     try
     {
-      const [h, c]=await Promise.all([getAdminHostels(token), getContacts(token)]);
+      const [h, c, r]=await Promise.all([getAdminHostels(token), getContacts(token), getAdminReviews(token)]);
       setHostels(h);
       setContacts(c);
+      setReviews(r);
     } catch (err)
     {
       if (err.response?.status===401) {localStorage.removeItem('adminToken'); navigate('/admin');}
@@ -251,7 +254,7 @@ export default function AdminDashboard()
 
   const handleArrayInput=(field, value) =>
   {
-    setFormData(prev => ({...prev, [field]: value.split(',').map(s => s.trim()).filter(Boolean)}));
+    setFormData(prev => ({...prev, [field+'Raw']: value, [field]: value.split(',').map(s => s.trim()).filter(Boolean)}));
   };
 
   const openAdd=() =>
@@ -265,7 +268,7 @@ export default function AdminDashboard()
   const openEdit=(hostel) =>
   {
     setEditingHostel(hostel);
-    setFormData(hostel);
+    setFormData({...hostel, featuresRaw: (hostel.features||[]).join(', '), uspsRaw: (hostel.usps||[]).join(', ')});
     setFormImages(hostel.images||[]);
     setShowForm(true);
   };
@@ -276,7 +279,8 @@ export default function AdminDashboard()
     setSubmitting(true);
     try
     {
-      const payload={...formData, images: formImages};
+      const {featuresRaw, uspsRaw, ...rest}=formData;
+      const payload={...rest, images: formImages};
       if (editingHostel)
       {
         await updateHostel(token, editingHostel._id, payload);
@@ -317,6 +321,27 @@ export default function AdminDashboard()
     } catch {addToast('Delete failed', 'error');}
   };
 
+  const handleToggleApprove=async (id, currentlyApproved) =>
+  {
+    try
+    {
+      await approveReview(token, id, !currentlyApproved);
+      addToast(currentlyApproved? 'Review unapproved':'Review approved!');
+      fetchData();
+    } catch {addToast('Action failed', 'error');}
+  };
+
+  const handleDeleteReview=async (id) =>
+  {
+    if (!window.confirm('Delete this review?')) return;
+    try
+    {
+      await deleteReview(token, id);
+      addToast('Review deleted.');
+      fetchData();
+    } catch {addToast('Delete failed', 'error');}
+  };
+
   const handleLogout=() => {localStorage.removeItem('adminToken'); navigate('/admin');};
 
   if (loading) return (
@@ -349,6 +374,7 @@ export default function AdminDashboard()
         {[
           {id: 'hostels', label: 'Hostels', count: hostels.length, icon: <path d="M3 19H21V21H3V19ZM4 6H20V17H4V6ZM9 8V15H15V8H9Z" />},
           {id: 'contacts', label: 'Messages', count: contacts.length, icon: <path d="M6.455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.455Z" />},
+          {id: 'reviews', label: 'Reviews', count: reviews.length, icon: <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z" />},
         ].map(tab => (
           <button
             key={tab.id}
@@ -417,7 +443,7 @@ export default function AdminDashboard()
           <div>
             <h1 className="text-[#f0ebd8] font-bold text-lg capitalize">{activeTab}</h1>
             <p className="text-[#f0ebd8]/40 text-xs hidden sm:block">
-              {activeTab==='hostels'? `${hostels.length} properties`:`${contacts.length} messages`}
+              {activeTab==='hostels'? `${hostels.length} properties`:activeTab==='contacts'? `${contacts.length} messages`:`${reviews.length} reviews`}
             </p>
           </div>
           {activeTab==='hostels'&&(
@@ -529,6 +555,48 @@ export default function AdminDashboard()
               ))}
             </div>
           )}
+
+          {/* ══ REVIEWS TAB ══ */}
+          {activeTab==='reviews'&&(
+            <div className="space-y-3 max-w-4xl">
+              {reviews.length===0? (
+                <p className="text-[#f0ebd8]/30 py-16 text-center">No reviews yet</p>
+              ):reviews.map(r => (
+                <div key={r._id} className="stagger-item bg-[#f0ebd8] rounded-2xl p-5">
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="font-bold text-[#0d1b2a]">{r.name}</h3>
+                        <span className="text-[#0d1b2a]/40 text-xs">{r.role}</span>
+                        <span className="text-[#0d1b2a]/40 text-xs">· {new Date(r.createdAt).toLocaleDateString('en-IN', {day: 'numeric', month: 'short', year: 'numeric'})}</span>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${r.approved? 'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}`}>
+                          {r.approved? 'Approved':'Pending'}
+                        </span>
+                      </div>
+                      <div className="flex gap-0.5 mb-2">
+                        {Array.from({length: 5}).map((_, s) => (
+                          <svg key={s} className={`w-4 h-4 ${s<r.rating? 'text-yellow-500':'text-gray-300'}`} fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-[#0d1b2a]/80 text-sm leading-relaxed">{r.text}</p>
+                    </div>
+                    <div className="flex flex-col gap-2 flex-shrink-0">
+                      <button onClick={() => handleToggleApprove(r._id, r.approved)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${r.approved? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200':'bg-green-100 text-green-700 hover:bg-green-200'}`}>
+                        {r.approved? 'Unapprove':'Approve'}
+                      </button>
+                      <button onClick={() => handleDeleteReview(r._id)}
+                        className="px-3 py-1.5 rounded-lg text-xs font-bold text-red-500 bg-red-50 hover:bg-red-100 transition-colors">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </main>
       </div>
 
@@ -620,11 +688,11 @@ export default function AdminDashboard()
               {/* FEATURES & USPS */}
               <FormSection title="Features & USPs" />
               <Field label="Features (comma separated)">
-                <input type="text" value={(formData.features||[]).join(', ')} onChange={(e) => handleArrayInput('features', e.target.value)}
+                <input type="text" value={formData.featuresRaw??(formData.features||[]).join(', ')} onChange={(e) => handleArrayInput('features', e.target.value)}
                   className={inputCls} placeholder="WiFi, AC, Hot Water, Gym" />
               </Field>
               <Field label="USPs (comma separated)">
-                <input type="text" value={(formData.usps||[]).join(', ')} onChange={(e) => handleArrayInput('usps', e.target.value)}
+                <input type="text" value={formData.uspsRaw??(formData.usps||[]).join(', ')} onChange={(e) => handleArrayInput('usps', e.target.value)}
                   className={inputCls} placeholder="Silent Study Zone, Rooftop Lounge" />
               </Field>
 

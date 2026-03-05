@@ -69,3 +69,28 @@ export const uploadImage=async (token, file) =>
   });
   return response.data; // { url, public_id }
 };
+
+/* ── Reviews (admin) ── */
+export const getAdminReviews=async (token) =>
+{
+  const response=await axios.get(`${ADMIN_API}/reviews`, {
+    headers: {Authorization: `Bearer ${token}`}
+  });
+  return response.data;
+};
+
+export const approveReview=async (token, id, approved) =>
+{
+  const response=await axios.patch(`${ADMIN_API}/reviews/${id}/approve`, {approved}, {
+    headers: {Authorization: `Bearer ${token}`}
+  });
+  return response.data;
+};
+
+export const deleteReview=async (token, id) =>
+{
+  const response=await axios.delete(`${ADMIN_API}/reviews/${id}`, {
+    headers: {Authorization: `Bearer ${token}`}
+  });
+  return response.data;
+};

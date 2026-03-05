@@ -5,6 +5,16 @@ const ScrollToTop=() =>
 {
     const {pathname}=useLocation();
 
+    // On initial load / reload — always scroll to top
+    useEffect(() =>
+    {
+        if ('scrollRestoration' in window.history)
+        {
+            window.history.scrollRestoration='manual';
+        }
+        window.scrollTo(0, 0);
+    }, []);
+
     useEffect(() =>
     {
         // 1. Disable browser's automatic scroll restoration immediately

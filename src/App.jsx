@@ -4,6 +4,7 @@ import Nav from './components/Navbar'
 import MainRoutes from './routes/MainRoutes'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import WhatsAppButton from './components/WhatsAppButton'
 
 const App=() =>
 {
@@ -17,6 +18,7 @@ const App=() =>
       <div className='flex-grow'>
         <MainRoutes />
       </div>
+      {!isAdminRoute&&<WhatsAppButton />}
     </div>
   )
 }

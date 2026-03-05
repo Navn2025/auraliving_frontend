@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchHostelById} from '../store/slice/hostel.slice';
@@ -27,10 +27,81 @@ const HostelPage=() =>
     const [lightboxOpen, setLightboxOpen]=useState(false);
     const [lightboxIndex, setLightboxIndex]=useState(0);
 
+    // Swipe state for main image gallery
+    const [mainSwipeOffset, setMainSwipeOffset]=useState(0);
+    const [mainTransitioning, setMainTransitioning]=useState(false);
+    const mainTouchRef=useRef({startX: 0, startY: 0, isDragging: false});
+
+    // Swipe state for lightbox
+    const [lbSwipeOffset, setLbSwipeOffset]=useState(0);
+    const [lbTransitioning, setLbTransitioning]=useState(false);
+    const lbTouchRef=useRef({startX: 0, startY: 0, isDragging: false});
+
+    const SWIPE_THRESHOLD=50;
+
     const openLightbox=(idx) => {setLightboxIndex(idx); setLightboxOpen(true); document.body.style.overflow='hidden';};
     const closeLightbox=() => {setLightboxOpen(false); document.body.style.overflow='';};
     const lightboxPrev=() => setLightboxIndex(i => (i-1+hostel.images.length)%hostel.images.length);
     const lightboxNext=() => setLightboxIndex(i => (i+1)%hostel.images.length);
+
+    // Main image swipe handlers
+    const currentMainIndex=hostel?.images? hostel.images.indexOf(primaryImage):0;
+
+    const goToMainImage=useCallback((newIndex) =>
+    {
+        if (!hostel?.images||hostel.images.length<=1) return;
+        const len=hostel.images.length;
+        const idx=((newIndex%len)+len)%len;
+        setMainTransitioning(true);
+        setTimeout(() =>
+        {
+            setPrimaryImage(hostel.images[idx]);
+            setMainTransitioning(false);
+        }, 250);
+    }, [hostel]);
+
+    const handleMainTouchStart=(e) =>
+    {
+        mainTouchRef.current={startX: e.touches[0].clientX, startY: e.touches[0].clientY, isDragging: true};
+        setMainSwipeOffset(0);
+    };
+    const handleMainTouchMove=(e) =>
+    {
+        if (!mainTouchRef.current.isDragging) return;
+        const dx=e.touches[0].clientX-mainTouchRef.current.startX;
+        const dy=e.touches[0].clientY-mainTouchRef.current.startY;
+        if (Math.abs(dx)>Math.abs(dy)) {e.preventDefault(); setMainSwipeOffset(dx);}
+    };
+    const handleMainTouchEnd=() =>
+    {
+        if (!mainTouchRef.current.isDragging) return;
+        mainTouchRef.current.isDragging=false;
+        if (mainSwipeOffset<-SWIPE_THRESHOLD) goToMainImage(currentMainIndex+1);
+        else if (mainSwipeOffset>SWIPE_THRESHOLD) goToMainImage(currentMainIndex-1);
+        setMainSwipeOffset(0);
+    };
+
+    // Lightbox swipe handlers
+    const handleLbTouchStart=(e) =>
+    {
+        lbTouchRef.current={startX: e.touches[0].clientX, startY: e.touches[0].clientY, isDragging: true};
+        setLbSwipeOffset(0);
+    };
+    const handleLbTouchMove=(e) =>
+    {
+        if (!lbTouchRef.current.isDragging) return;
+        const dx=e.touches[0].clientX-lbTouchRef.current.startX;
+        const dy=e.touches[0].clientY-lbTouchRef.current.startY;
+        if (Math.abs(dx)>Math.abs(dy)) {e.preventDefault(); setLbSwipeOffset(dx);}
+    };
+    const handleLbTouchEnd=() =>
+    {
+        if (!lbTouchRef.current.isDragging) return;
+        lbTouchRef.current.isDragging=false;
+        if (lbSwipeOffset<-SWIPE_THRESHOLD) lightboxNext();
+        else if (lbSwipeOffset>SWIPE_THRESHOLD) lightboxPrev();
+        setLbSwipeOffset(0);
+    };
 
     useEffect(() =>
     {
@@ -133,14 +204,49 @@ const HostelPage=() =>
                             <div className="border-4 border-[#0d1b2a] rounded-xl overflow-hidden">
                                 {hostel.images&&hostel.images.length>0? (
                                     <div className="space-y-4">
-                                        {/* Main Image */}
-                                        <div className="relative aspect-video sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-[#0d1b2a] cursor-pointer group"
-                                            onClick={() => openLightbox(hostel.images.indexOf(primaryImage))}>
+                                        {/* Main Image - Swipeable */}
+                                        <div className="relative aspect-video sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-[#0d1b2a] cursor-pointer group select-none touch-pan-y"
+                                            onTouchStart={handleMainTouchStart}
+                                            onTouchMove={handleMainTouchMove}
+                                            onTouchEnd={handleMainTouchEnd}
+                                            onClick={() => {if (Math.abs(mainSwipeOffset)<5) openLightbox(hostel.images.indexOf(primaryImage));}}>
                                             <img
                                                 src={primaryImage}
                                                 alt={hostel.name}
-                                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 pointer-events-none"
+                                                style={{
+                                                    transform: `translateX(${mainSwipeOffset}px)`,
+                                                    transition: mainTouchRef.current.isDragging? 'none':'transform 0.25s ease-out',
+                                                    opacity: mainTransitioning? 0:1,
+                                                }}
+                                                draggable={false}
                                             />
+                                            {/* Swipe indicator dots */}
+                                            {hostel.images.length>1&&(
+                                                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                                    {hostel.images.map((_, idx) => (
+                                                        <button key={idx} onClick={(e) => {e.stopPropagation(); setPrimaryImage(hostel.images[idx]);}}
+                                                            className={`w-2 h-2 rounded-full transition-all ${idx===currentMainIndex? 'bg-[#f0ebd8] w-5':'bg-[#f0ebd8]/40 hover:bg-[#f0ebd8]/70'}`} />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {/* Navigation arrows for desktop */}
+                                            {hostel.images.length>1&&(
+                                                <>
+                                                    <button onClick={(e) => {e.stopPropagation(); goToMainImage(currentMainIndex-1);}}
+                                                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-black/30 hover:bg-black/50 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                                        <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path>
+                                                        </svg>
+                                                    </button>
+                                                    <button onClick={(e) => {e.stopPropagation(); goToMainImage(currentMainIndex+1);}}
+                                                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 bg-black/30 hover:bg-black/50 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                                        <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M13.1714 12.0007L8.22168 7.05093L9.63589 5.63672L15.9999 12.0007L9.63589 18.3646L8.22168 16.9504L13.1714 12.0007Z"></path>
+                                                        </svg>
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
 
                                         {/* Thumbnails */}
@@ -447,7 +553,11 @@ const HostelPage=() =>
             </section>
             {/* Fullscreen Lightbox */}
             {lightboxOpen&&hostel.images&&hostel.images.length>0&&(
-                <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center" onClick={closeLightbox}>
+                <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center select-none"
+                    onClick={closeLightbox}
+                    onTouchStart={handleLbTouchStart}
+                    onTouchMove={handleLbTouchMove}
+                    onTouchEnd={handleLbTouchEnd}>
                     {/* Close button */}
                     <button onClick={closeLightbox}
                         className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
@@ -476,11 +586,16 @@ const HostelPage=() =>
                         </button>
                     )}
 
-                    {/* Image */}
+                    {/* Lightbox Image - Swipeable */}
                     <img
                         src={hostel.images[lightboxIndex]}
                         alt={`${hostel.name} - Image ${lightboxIndex+1}`}
-                        className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                        className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl pointer-events-none"
+                        style={{
+                            transform: `translateX(${lbSwipeOffset}px)`,
+                            transition: lbTouchRef.current.isDragging? 'none':'transform 0.3s ease-out',
+                        }}
+                        draggable={false}
                         onClick={(e) => e.stopPropagation()}
                     />
 

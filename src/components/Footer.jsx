@@ -91,7 +91,7 @@ const Footer=() =>
                         <li>Madhu Milan, Chhawani Road, Indore</li>
                         <li><a href="tel:+918989140402" className="hover:underline">+91 8989140402</a></li>
                         <li><a href="tel:+919111485959" className="hover:underline">+91 91114 85959</a></li>
-                        <li><a href="mailto:auralivings20@gmail.com" className="hover:underline">auralivings20@gmail.com</a></li>
+                        <li><a href="mailto:auralivings.support@gmail.com" className="hover:underline">auralivings.support@gmail.com</a></li>
                     </ul>
                     <div className="flex gap-4 mt-4">
                         {/* Instagram */}

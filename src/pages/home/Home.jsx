@@ -217,6 +217,81 @@ export default function Home()
                 </div>
             </section>
 
+            {/* ═══════════════ POPULAR DESTINATIONS ═══════════════ */}
+            <section className="popular-section w-full bg-[#f0ebd8] py-14 sm:py-16 lg:py-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="popular-heading text-center mb-10 sm:mb-14 space-y-3">
+                        <span className="inline-block px-4 py-2 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-xs sm:text-sm font-medium">
+                            Top Picks
+                        </span>
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">Popular Destinations</h2>
+                        <p className="text-sm sm:text-base lg:text-lg text-[#0d1b2a]/70 max-w-2xl mx-auto">
+                            Our most loved hostels, handpicked by students just like you.
+                        </p>
+                    </div>
+
+                    {popularHostels.length>0? (
+                        <div className="popular-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+                            {popularHostels.map((h) => (
+                                <div key={h._id}
+                                    onClick={() => navigate(`/hostel/${h._id}`)}
+                                    className="popular-card group relative bg-[#0d1b2a] p-2 overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl cursor-pointer hover:-translate-y-2">
+                                    <div className="border-2 border-[#f0ebd8]/20">
+                                        <div className="relative h-48 sm:h-52 w-full overflow-hidden">
+                                            <img src={h.images?.[0]||img1} alt={h.name}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                            {h.popular&&(
+                                                <div className="absolute top-2 right-2 bg-[#f0ebd8] text-[#0d1b2a] px-2 py-1 text-[10px] sm:text-xs font-bold shadow-lg flex items-center gap-1">
+                                                    <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                    </svg>
+                                                    Popular
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-[#0d1b2a]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        </div>
+                                        <div className="p-4 sm:p-5 space-y-3">
+                                            <div className="space-y-1">
+                                                <h3 className="text-base sm:text-lg font-bold text-[#f0ebd8] line-clamp-1">{h.name}</h3>
+                                                <p className="text-[#f0ebd8] text-xs sm:text-sm flex items-center gap-1.5 opacity-70">
+                                                    <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span className="line-clamp-1">{h.location}</span>
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center justify-between pt-3 border-t border-[#f0ebd8]/15">
+                                                <div className="flex items-center gap-1.5">
+                                                    <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                    </svg>
+                                                    <span className="text-[#f0ebd8] font-bold text-sm sm:text-base">{h.rating?.toFixed(1)||'N/A'}</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-[#f0ebd8] text-lg sm:text-xl font-black">
+                                                        ₹{h.price?.toLocaleString()}
+                                                        <span className="text-xs font-normal opacity-50 ml-0.5">/mo</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute inset-0 border-2 border-[#f0ebd8]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                </div>
+                            ))}
+                        </div>
+                    ):(
+                        <p className="text-center text-[#0d1b2a]/50 text-sm">No popular hostels yet.</p>
+                    )}
+
+                    <div className="popular-btn text-center mt-10 sm:mt-12">
+                        <button onClick={() => navigate('/hostel')} className="px-6 sm:px-8 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
+                            View All Hostels
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             {/* ═══════════════ ABOUT ═══════════════ */}
             <section className="about-section w-full bg-[#0d1b2a]">
                 <div className="container mx-auto flex flex-col lg:flex-row min-h-[28rem] lg:min-h-[36rem]">
@@ -296,81 +371,6 @@ export default function Home()
                                 </div>
                             ))}
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ═══════════════ POPULAR DESTINATIONS ═══════════════ */}
-            <section className="popular-section w-full bg-[#f0ebd8] py-14 sm:py-16 lg:py-24">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="popular-heading text-center mb-10 sm:mb-14 space-y-3">
-                        <span className="inline-block px-4 py-2 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-xs sm:text-sm font-medium">
-                            Top Picks
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0d1b2a]">Popular Destinations</h2>
-                        <p className="text-sm sm:text-base lg:text-lg text-[#0d1b2a]/70 max-w-2xl mx-auto">
-                            Our most loved hostels, handpicked by students just like you.
-                        </p>
-                    </div>
-
-                    {popularHostels.length>0? (
-                        <div className="popular-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-                            {popularHostels.map((h) => (
-                                <div key={h._id}
-                                    onClick={() => navigate(`/hostel/${h._id}`)}
-                                    className="popular-card group relative bg-[#0d1b2a] p-2 overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl cursor-pointer hover:-translate-y-2">
-                                    <div className="border-2 border-[#f0ebd8]/20">
-                                        <div className="relative h-48 sm:h-52 w-full overflow-hidden">
-                                            <img src={h.images?.[0]||img1} alt={h.name}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                            {h.popular&&(
-                                                <div className="absolute top-2 right-2 bg-[#f0ebd8] text-[#0d1b2a] px-2 py-1 text-[10px] sm:text-xs font-bold shadow-lg flex items-center gap-1">
-                                                    <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                    Popular
-                                                </div>
-                                            )}
-                                            <div className="absolute inset-0 bg-[#0d1b2a]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        </div>
-                                        <div className="p-4 sm:p-5 space-y-3">
-                                            <div className="space-y-1">
-                                                <h3 className="text-base sm:text-lg font-bold text-[#f0ebd8] line-clamp-1">{h.name}</h3>
-                                                <p className="text-[#f0ebd8] text-xs sm:text-sm flex items-center gap-1.5 opacity-70">
-                                                    <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span className="line-clamp-1">{h.location}</span>
-                                                </p>
-                                            </div>
-                                            <div className="flex items-center justify-between pt-3 border-t border-[#f0ebd8]/15">
-                                                <div className="flex items-center gap-1.5">
-                                                    <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                    <span className="text-[#f0ebd8] font-bold text-sm sm:text-base">{h.rating?.toFixed(1)||'N/A'}</span>
-                                                </div>
-                                                <div className="text-right">
-                                                    <p className="text-[#f0ebd8] text-lg sm:text-xl font-black">
-                                                        ₹{h.price?.toLocaleString()}
-                                                        <span className="text-xs font-normal opacity-50 ml-0.5">/mo</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="absolute inset-0 border-2 border-[#f0ebd8]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                                </div>
-                            ))}
-                        </div>
-                    ):(
-                        <p className="text-center text-[#0d1b2a]/50 text-sm">No popular hostels yet.</p>
-                    )}
-
-                    <div className="popular-btn text-center mt-10 sm:mt-12">
-                        <button onClick={() => navigate('/hostel')} className="px-6 sm:px-8 py-3 sm:py-4 bg-[#0d1b2a] text-[#f0ebd8] rounded-full text-sm sm:text-base font-semibold hover:scale-105 active:scale-95 transition-all duration-200">
-                            View All Hostels
-                        </button>
                     </div>
                 </div>
             </section>
